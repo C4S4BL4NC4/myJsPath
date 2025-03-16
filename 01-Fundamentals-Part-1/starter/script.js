@@ -31,9 +31,70 @@ AVOID LOOSE EQUALITY OPERATOR WHEN COMPARING
 
 - Prompt: (input() in python) reveals a prompt field for the user to write an input in it.
 
-- 
+*/
+
+/*
+const hasDriverLicense = true;
+const hasGoodVision = false;
+
+console.log(hasDriverLicense && hasGoodVision);
+console.log(hasDriverLicense || hasGoodVision);
+console.log(!hasDriverLicense);
+
+const shouldDrive = hasDriverLicense && hasGoodVision;
+
+// if (shouldDrive){
+//     console.log('Sarah is good to drive');    
+// } else {
+//     console.log('Someone else should drive!');
+// }
+
+const isTired = true;
+console.log(hasDriverLicense && hasGoodVision && !isTired);
+
+if (shouldDrive) {
+    console.log('Sarah is good to drive');
+} else {
+    console.log('Someone else should drive!');
+}
+*/
+
+/*
+//Switch Statement
+
+const day = 'monday';
+
+switch (day) {
+    case 'monday':
+        console.log('LAB1');
+        console.log('EEE1');
+        break;
+    case 'tuesday':
+        console.log('LAB2');
+        break;
+    case 'wednesday':
+    case 'thursday':
+        console.log('LAB3');
+        break;
+    default:
+        console.log('Not a valid day');
+
+}
+*/
+
+
+/*
+// Statements and Expressions:
 
 
 */
 
 
+/*
+// Ternary conditional operator:
+
+const age = 23;
+
+age >= 18 ? console.log('I like pizza') :
+    console.log('I like candy');
+    */

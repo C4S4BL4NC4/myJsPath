@@ -98,3 +98,8 @@ const age = 23;
 age >= 18 ? console.log('I like pizza') :
     console.log('I like candy');
     */
+
+/*
+ternary operator:
+condition<= =>  ? true : false;
+*/

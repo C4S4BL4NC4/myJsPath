@@ -152,3 +152,21 @@ console.log(neymar.calcAge());
 
 console.log(neymar.getSummary());
 console.log(neymar.isRetired);
+
+// Loops and iterations
+for (let i = 0; i <= 9; i++) {
+  console.log(i);
+}
+
+// continue and break as in cpp
+// looping backwards and nested loops
+for (let i = years.length - 1; i >= 0; i--) {
+  console.log(years[i]);
+}
+
+// While loops
+/*
+while (){
+
+}
+*/

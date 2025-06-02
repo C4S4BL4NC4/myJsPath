@@ -6,14 +6,38 @@ let pScore = [0, 0];
 let pTotal = [0, 0];
 const maxScore = 100;
 let turn = 0;
+const diceHandle = document.querySelector('.dice');
 
 // Functions
 
 function roll() {
-  return Math.trunc(Math.random() * 6) + 1;
+  let rolls = Math.trunc(Math.random() * 6) + 1;
+  switch (rolls) {
+    case 1:
+      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 1`);
+      break;
+    case 2:
+      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 2`);
+      break;
+    case 3:
+      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 3`);
+      break;
+    case 4:
+      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 4`);
+      break;
+    case 5:
+      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 5`);
+      break;
+    case 6:
+      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 6`);
+      break;
+    default:
+      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Defaulted`);
+      break;
+  }
 }
 
-function turnSwitch(player) {
+function switchTurn(player) {
   if (player === 0) {
     // Player 1
     player = 1;
@@ -25,8 +49,9 @@ function turnSwitch(player) {
   }
 }
 
-function addC2T(current, player) {
-  // Add current to total score
+function addC2T(current, pTotalScore) {
+  // Add current to total score of a player
+  return (pTotalScore += current);
 }
 
 /* Program Flow */

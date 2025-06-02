@@ -2,77 +2,54 @@
 
 // Variables
 
-let pScore = [0, 0];
-let pTotal = [0, 0];
-const maxScore = 30;
-let turn = 0;
+let currentScore = 0; // Current Score
+let pTotal = [0, 0]; // Total Score
+const maxScore = 30; // Game's max score
+let turn = false; // Whose Turn
 
 // Element Handlers
 
-const score0EL = document.querySelector('#score--0');
-const score1EL = document.getElementById('score--1');
+function getCurrentEL() {
+  return document.getElementById(`current--${turn === false ? 0 : 1}`);
+}
+function getScoreEL() {
+  return document.getElementById(`score--${turn === false ? 0 : 1}`);
+}
 const diceEL = document.querySelector('.dice');
 const newGameEL = document.querySelector('.btn--new');
 const rollBtnEL = document.querySelector('.btn--roll');
 const resetBtnEL = document.querySelector('.btn--new');
 const holdBtnEL = document.querySelector('.btn--hold');
+const player0EL = document.querySelector('.player--0');
+const player1EL = document.querySelector('.player--1');
 
 // Functions
 
 function init() {
   // Initalize HTML values
 
-  score0EL.textContent = 0;
-  score1EL.textContent = 0;
+  document.getElementById(`score--1`).textContent = 0;
+  document.getElementById(`score--0`).textContent = 0;
   diceEL.classList.add('hidden');
-  //newGameEL.classList.add('hidden');
+  newGameEL.classList.add('hidden');
 }
 
 function roll() {
+  diceEL.classList.remove('hidden');
   let rolls = Math.trunc(Math.random() * 6) + 1;
-  switch (rolls) {
-    case 1:
-      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 1`);
-      break;
-    case 2:
-      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 2`);
-      break;
-    case 3:
-      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 3`);
-      break;
-    case 4:
-      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 4`);
-      break;
-    case 5:
-      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 5`);
-      break;
-    case 6:
-      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Rolled a 6`);
-      break;
-    default:
-      console.log(`${turn === 0 ? 'Player 1' : 'Player 2'} Defaulted`);
-      break;
-  }
+  diceEL.src = `dice-${rolls}.png`;
+  return rolls;
 }
 
-function switchTurn(player) {
-  if (player === 0) {
-    // Player 1
-
-    player = 1;
+function switchActive(turn) {
+  if (turn === false) {
+    player0EL.classList.remove('player--active');
+    player1EL.classList.add('player--active');
   }
-
-  if (player === 1) {
-    // Player 2
-
-    player = 0;
+  if (turn === true) {
+    player0EL.classList.add('player--active');
+    player1EL.classList.remove('player--active');
   }
-}
-
-function addC2T(current, pTotalScore) {
-  // Add current to total score of a player
-
-  return (pTotalScore += current);
 }
 
 function resetGame() {
@@ -86,14 +63,30 @@ init();
 // Dice Button
 
 rollBtnEL.addEventListener('click', function () {
-  roll();
+  let diceRoll = roll();
+  if (diceRoll !== 1) {
+    currentScore = currentScore + diceRoll;
+    getCurrentEL().textContent = currentScore;
+  } else if (diceRoll === 1) {
+    currentScore = 0;
+    getCurrentEL().textContent = currentScore;
+    switchActive(turn);
+    turn = !turn;
+  }
 });
 
 // Hold Button
 
 holdBtnEL.addEventListener('click', function () {
-  console.log('Hold Clicked');
-  switchTurn(turn);
+  diceEL.classList.add('hidden');
+  if (turn === false) {
+    switchActive(turn);
+    turn = true;
+  } else {
+    switchActive(turn);
+    turn = false;
+  }
+  console.log('Player' + turn + ' turn');
 });
 
 // Game Reset

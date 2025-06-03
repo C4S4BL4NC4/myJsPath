@@ -80,8 +80,9 @@ function resetGame() {
   newGameEL.classList.add('hidden');
   rollBtnEL.classList.remove('hidden');
   holdBtnEL.classList.remove('hidden');
-  rollBtnEL.disabled = false;
-  holdBtnEL.disabled = false;
+  rollBtnEL.disabled = false; // Enable Roll Button
+  holdBtnEL.disabled = false; // Enable Hold Button
+  console.log('Game Reset Complete');
 }
 
 /* Program Flow */

@@ -1,5 +1,9 @@
 'use strict';
 
+// Pig Game
+// A simple dice game where two players take turns to roll a dice and accumulate points.
+// Note: the code needs to be DRYer and more modular, but for the less of time I wanna spend here, I kept it messy :P
+
 // Variables
 
 let currentScore = 0; // Current Score
@@ -14,6 +18,9 @@ function getCurrentEL() {
 }
 function getScoreEL() {
   return document.getElementById(`score--${turn === false ? 0 : 1}`);
+}
+function getPlayerEL() {
+  return document.querySelector(`.player--${turn === false ? 0 : 1}`);
 }
 const diceEL = document.querySelector('.dice');
 const newGameEL = document.querySelector('.btn--new');
@@ -54,6 +61,20 @@ function switchActive(turn) {
 
 function resetGame() {
   console.log('Game is Reset');
+  currentScore = 0;
+  init();
+  pTotal = [0, 0];
+  turn = false;
+  player0EL.classList.remove('player--winner');
+  player1EL.classList.remove('player--winner');
+  player0EL.classList.add('player--active');
+  player1EL.classList.remove('player--active');
+  diceEL.classList.add('hidden');
+  getCurrentEL().textContent = 0;
+  getCurrentEL(true).textContent = 0;
+  getScoreEL().textContent = 0;
+  getScoreEL(true).textContent = 0;
+  newGameEL.classList.add('hidden');
 }
 
 /* Program Flow */
@@ -80,9 +101,34 @@ rollBtnEL.addEventListener('click', function () {
 holdBtnEL.addEventListener('click', function () {
   diceEL.classList.add('hidden');
   if (turn === false) {
+    pTotal[0] += Number(getCurrentEL(turn).textContent);
+    getScoreEL().textContent = pTotal[0];
+    currentScore = 0;
+    getCurrentEL(turn).textContent = 0;
+    if (pTotal[0] >= maxScore) {
+      getPlayerEL().classList.add('player--winner');
+      newGameEL.classList.remove('hidden');
+      diceEL.classList.add('hidden');
+      holdBtnEL.classList.add('hidden');
+      rollBtnEL.classList.add('hidden');
+      return;
+    }
     switchActive(turn);
     turn = true;
   } else {
+    pTotal[1] += Number(getCurrentEL(turn).textContent);
+    getScoreEL().textContent = pTotal[1];
+    currentScore = 0;
+    getCurrentEL(turn).textContent = 0;
+    if (pTotal[1] >= maxScore) {
+      getPlayerEL().classList.add('player--winner');
+      newGameEL.classList.remove('hidden');
+      diceEL.classList.add('hidden');
+      diceEL.classList.add('hidden');
+      holdBtnEL.classList.add('hidden');
+      rollBtnEL.classList.add('hidden');
+      return;
+    }
     switchActive(turn);
     turn = false;
   }

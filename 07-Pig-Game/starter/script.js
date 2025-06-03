@@ -8,7 +8,7 @@
 
 let currentScore = 0; // Current Score
 let pTotal = [0, 0]; // Total Score
-const maxScore = 30; // Game's max score
+const maxScore = 100; // Game's max score
 let turn = false; // Whose Turn
 
 // Element Handlers
@@ -37,8 +37,11 @@ function init() {
 
   document.getElementById(`score--1`).textContent = 0;
   document.getElementById(`score--0`).textContent = 0;
+  document.getElementById(`current--1`).textContent = 0;
+  document.getElementById(`current--0`).textContent = 0;
   diceEL.classList.add('hidden');
-  newGameEL.classList.add('hidden');
+  rollBtnEL.classList.remove('hidden');
+  holdBtnEL.classList.remove('hidden');
 }
 
 function roll() {
@@ -75,6 +78,10 @@ function resetGame() {
   getScoreEL().textContent = 0;
   getScoreEL(true).textContent = 0;
   newGameEL.classList.add('hidden');
+  rollBtnEL.classList.remove('hidden');
+  holdBtnEL.classList.remove('hidden');
+  rollBtnEL.disabled = false;
+  holdBtnEL.disabled = false;
 }
 
 /* Program Flow */

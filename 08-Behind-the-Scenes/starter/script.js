@@ -1,5 +1,8 @@
 'use strict';
 
+/*
+
+
 const jessica = {
   firstName: 'Jessica',
   lastName: 'Williams',
@@ -42,7 +45,7 @@ Block: Variables declared within a block (while, for, if) with let and const.
 
 
 */
-
+/*
 // Variables
 console.log(me);
 console.log(job);
@@ -59,3 +62,4 @@ function addD(a, b) {
 }
 
 // DON'T USE VAR TO DECLARE VARIABLES
+ */

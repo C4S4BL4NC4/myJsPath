@@ -277,17 +277,26 @@ const books = [
 const [firstBook, secondBook] = books;
 console.log(firstBook, secondBook);
 
+<<<<<<< HEAD
 // 1.2: Skipping
+=======
+// 1.2:
+>>>>>>> fd76a18d514ead31df4c44d52d52c0c8defc6e7c
 
 const [, , thirdBook] = books;
 console.log(thirdBook);
 
+<<<<<<< HEAD
 // 1.3: Nested Skips
+=======
+// 1.3:
+>>>>>>> fd76a18d514ead31df4c44d52d52c0c8defc6e7c
 
 const ratings = [
   ['rating', 4.19],
   ['ratingsCount', 144584],
 ];
+<<<<<<< HEAD
 
 const [[, rating], [, ratingsCount]] = ratings;
 console.log(ratingsCount);
@@ -301,3 +310,5 @@ const [fiveStarRatings = 0, oneStarRatings = 0, threeStarRatings = 0] =
 console.log(fiveStarRatings);
 console.log(oneStarRatings);
 console.log(threeStarRatings);
+=======
+>>>>>>> fd76a18d514ead31df4c44d52d52c0c8defc6e7c

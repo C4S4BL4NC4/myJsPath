@@ -46,6 +46,10 @@ const restaurant = {
   },
 };
 
+const { name, categories, openingHours } = restaurant;
+console.log(name, categories, openingHours);
+
+/*
 // Return multiple things from a function using an array as a return [1, 2];
 const books = [
   {
@@ -288,3 +292,4 @@ const ratings = [
   ['rating', 4.19],
   ['ratingsCount', 144584],
 ];
+*/

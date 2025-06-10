@@ -42,6 +42,8 @@ function init() {
   diceEL.classList.add('hidden');
   rollBtnEL.classList.remove('hidden');
   holdBtnEL.classList.remove('hidden');
+  newGameEL.classList.add('hidden');
+  rollBtnEL.disabled = false; // Enable Roll Button
 }
 
 function roll() {

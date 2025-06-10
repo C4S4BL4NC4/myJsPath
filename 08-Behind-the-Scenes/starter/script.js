@@ -63,3 +63,12 @@ function addD(a, b) {
 
 // DON'T USE VAR TO DECLARE VARIABLES
  */
+<<<<<<< HEAD
+
+// Garbage Collection
+/*
+Always dectivate timers and listeners when no longer needed
+Always avoid to declare large objects
+*/
+=======
+>>>>>>> b58011f7cb384c69a4620d3ba899f553336f8f4c

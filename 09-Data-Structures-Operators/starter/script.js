@@ -1,5 +1,7 @@
 'use strict';
 
+/*
+
 // Data needed for a later exercise
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
@@ -44,12 +46,102 @@ const restaurant = {
       close: 24,
     },
   },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`here is your pasta of ${ing1}, ${ing2}, and ${ing3}`);
+  },
+  orderPizza: function (mainIng, ...otherIng) {
+    console.log(`${mainIng} Pizza with some ${otherIng}`);
+  },
 };
 
+*/
+
+/*
 const { name, categories, openingHours } = restaurant;
 console.log(name, categories, openingHours);
 
+// Spread Operator
+
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+console.log(badNewArr);
+
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+console.log(...newArr);
+
+const extendMenu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log(extendMenu);
+
+const newMenu = [...restaurant.mainMenu, 'Mortadilla'];
+console.log(newMenu);
+
+// iterables: arrays, strings, maps, sets. NOT objects
+
+const str = 'Stinger';
+const letters = [...str, '', 'S.'];
+console.log(letters);
+
+// const ingredients = [prompt('ing1'), prompt('ing2'), prompt('ing3')];
+// console.log(ingredients);
+
+// restaurant.orderPasta(...ingredients);
+
+*/
+
 /*
+
+// Rest Operator
+
+// SPREAD: becuase ... are on RIGHT side of =
+const arry = [1, 2, 3, ...[4, 5]];
+// REST: becuase ... are on LEFT side  of =
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others);
+
+const [pizza, , Risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, Risotto, otherFood);
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+  return sum;
+};
+
+add(1, 2, 3, 4, 5, 6);
+add(1, 2);
+add(0, 0);
+
+const x = [1, 3, 20];
+add(...x);
+
+restaurant.orderPizza('Truffle', 'Tomatos');
+
+// OR Shortcircuit: returns when it encounters first TRUE value
+console.log(false || '');
+const guests = restaurant.numGuests || 20;
+console.log(guests);
+
+// AND shortcircuit: returns when it encounters first FALSE value
+console.log(true && 0);
+
+// Nullish Coalescing Shortcircuit Operator:
+// Nullish: null and undefined
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
+
+*/
+
+/*
+
 // Return multiple things from a function using an array as a return [1, 2];
 const books = [
   {
@@ -281,15 +373,46 @@ const books = [
 const [firstBook, secondBook] = books;
 console.log(firstBook, secondBook);
 
-// 1.2:
+
+// 1.2: Skipping
 
 const [, , thirdBook] = books;
 console.log(thirdBook);
 
-// 1.3:
+
+// 1.3: Nested Skips
 
 const ratings = [
   ['rating', 4.19],
   ['ratingsCount', 144584],
 ];
+
 */
+/*
+const [[, rating], [, ratingsCount]] = ratings;
+console.log(ratingsCount);
+console.log(rating);
+
+// 1.4: Default Values
+
+const ratingStars = [63405, 1808];
+const [fiveStarRatings = 0, oneStarRatings = 0, threeStarRatings = 0] =
+  ratingStars;
+console.log(fiveStarRatings);
+console.log(oneStarRatings);
+console.log(threeStarRatings);
+*/
+
+const game1 = {
+  name: 'Ninja Shooter',
+  cati: 'Platformer',
+  copy: 2000000,
+};
+
+const game2 = {
+  name: 'Stale Bread Sim',
+  cati: 'Shooter',
+};
+
+game2.ageRate = game1.ageRate || 'E';
+console.log(game2.ageRate);

@@ -23,6 +23,21 @@ const mexicanFoods = new Set([
 ]);
 
 // Data needed for first part of the section
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -30,21 +45,196 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`here is your pasta of ${ing1}, ${ing2}, and ${ing3}`);
+  },
+
+  // ES6 enhanced object literals
+  openingHours,
+
+  orderPizza(mainIng, ...otherIng) {
+    console.log(`${mainIng} Pizza with some ${otherIng}`);
   },
 };
+
+///////////////////
+
+// Maps: map values to keys.
+
+const rest = new Map();
+rest.set('');
+
+///////////////////
+
+// // Sets: Collection of unique values (no dupes)  [iterable]
+// const ordersSet = new Set([
+//   'Pasta',
+//   'Pizza',
+//   'Pizza',
+//   'Gabagool',
+//   'Pizza',
+//   'Pizza',
+//   'Pasta',
+//   'Pizza',
+//   'Pizza',
+//   'Gabagool',
+// ]);
+
+// console.log(ordersSet);
+// console.log(new Set('Remedy'));
+// console.log(new Set('Remedy').size);
+// console.log(new Set('Remedy').has('R'));
+// console.log(new Set('Remedy').has('r'));
+// console.log(ordersSet.add('Mortadella'));
+// console.log(ordersSet.delete('Pizza'));
+// console.log(ordersSet);
+
+// // Cant get values outta sets
+
+// console.log(ordersSet.clear());
+// for (const order of ordersSet) console.log(order);
+
+// // Most use case of sets is to remove dupes out of arrays
+
+// const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef'];
+// const staffUnique = [...new Set(staff)];
+// console.log(staffUnique);
+
+// ES25: Set Methods
+/*
+const commonFoods = italianFoods.intersection(mexicanFoods);
+console.log([...commonFoods]);
+
+const fusion = italianFoods.union(mexicanFoods);
+console.log([...fusion]);
+
+const uniqueItalian = italianFoods.difference(mexicanFoods);
+console.log(uniqueItalian);
+
+const uniqueMexican = mexicanFoods.difference(italianFoods);
+console.log(uniqueMexican);
+
+const uniqueitaandmex = italianFoods.symmetricDifference(mexicanFoods);
+console.log(uniqueitaandmex);
+
+console.log(italianFoods.isDisjointFrom(mexicanFoods));
+
+*/
+
+///////////////////
+
+// Object Values and:
+
+// // Optional Chaining (?.):
+// if (restaurant.openingHours.mon && restaurant.openingHours) {
+//   console.log(restaurant.openingHours.mon.open);
+// }
+// // With optional chaining
+// console.log(restaurant.openingHours.mon?.open);
+// console.log(restaurant.openingHours?.mon?.open);
+
+// const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+// for (const day of days) {
+//   console.log(day);
+//   const open = restaurant.openingHours[day]?.open || 'thu and fri only!';
+//   console.log(`On ${day}, we open at ${open}`);
+// }
+
+/*
+// For of Loop looping over strings
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+for (const item of menu) console.log(item);
+
+for (const [i, el] of menu.entries()) console.log(i, el);
+*/
+
+/*
+const { name, categories, openingHours } = restaurant;
+console.log(name, categories, openingHours);
+
+// Spread Operator
+
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+console.log(badNewArr);
+
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+console.log(...newArr);
+
+const extendMenu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log(extendMenu);
+
+const newMenu = [...restaurant.mainMenu, 'Mortadilla'];
+console.log(newMenu);
+
+// iterables: arrays, strings, maps, sets. NOT objects
+
+const str = 'Stinger';
+const letters = [...str, '', 'S.'];
+console.log(letters);
+
+// const ingredients = [prompt('ing1'), prompt('ing2'), prompt('ing3')];
+// console.log(ingredients);
+
+// restaurant.orderPasta(...ingredients);
+
+*/
+
+/*
+
+// Rest Operator
+
+// SPREAD: becuase ... are on RIGHT side of =
+const arry = [1, 2, 3, ...[4, 5]];
+// REST: becuase ... are on LEFT side  of =
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others);
+
+const [pizza, , Risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, Risotto, otherFood);
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+  return sum;
+};
+/*
+add(1, 2, 3, 4, 5, 6);
+add(1, 2);
+add(0, 0);
+
+const x = [1, 3, 20];
+add(...x);
+
+restaurant.orderPizza('Truffle', 'Tomatos');
+
+// OR Shortcircuit: returns when it encounters first TRUE value
+console.log(false || '');
+const guests = restaurant.numGuests || 20;
+console.log(guests);
+
+// AND shortcircuit: returns when it encounters first FALSE value
+console.log(true && 0);
+
+// Nullish Coalescing Shortcircuit Operator:
+// Nullish: null and undefined
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
+
+*/
+
+/*
 
 // Return multiple things from a function using an array as a return [1, 2];
 const books = [
@@ -277,27 +467,22 @@ const books = [
 const [firstBook, secondBook] = books;
 console.log(firstBook, secondBook);
 
-<<<<<<< HEAD
+
 // 1.2: Skipping
-=======
-// 1.2:
->>>>>>> fd76a18d514ead31df4c44d52d52c0c8defc6e7c
 
 const [, , thirdBook] = books;
 console.log(thirdBook);
 
-<<<<<<< HEAD
+
 // 1.3: Nested Skips
-=======
-// 1.3:
->>>>>>> fd76a18d514ead31df4c44d52d52c0c8defc6e7c
 
 const ratings = [
   ['rating', 4.19],
   ['ratingsCount', 144584],
 ];
-<<<<<<< HEAD
 
+*/
+/*
 const [[, rating], [, ratingsCount]] = ratings;
 console.log(ratingsCount);
 console.log(rating);
@@ -310,5 +495,224 @@ const [fiveStarRatings = 0, oneStarRatings = 0, threeStarRatings = 0] =
 console.log(fiveStarRatings);
 console.log(oneStarRatings);
 console.log(threeStarRatings);
-=======
->>>>>>> fd76a18d514ead31df4c44d52d52c0c8defc6e7c
+*/
+
+/*
+const game1 = {
+  name: 'Ninja Shooter',
+  cati: 'Platformer',
+  copy: 2000000,
+};
+
+const game2 = {
+  name: 'Stale Bread Sim',
+  cati: 'Shooter',
+};
+
+game2.ageRate = game1.ageRate || 'E';
+console.log(game2.ageRate);
+
+*/
+
+/////////////////////////////////////////
+
+// Coding Challenge #1
+
+/* 
+We're building a football betting app (soccer for my American friends 😅)!
+
+Suppose we get data from a web service about a certain game (below). In this challenge we're gonna work with the data. So here are your tasks:
+
+1. Create one player array for each team (variables 'players1' and 'players2')
+2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
+3. Create an array 'allPlayers' containing all players of both teams (22 players)
+4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
+5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
+6. Write a function ('printGoals') that receives an arbitrary number of player names (NOT an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.
+
+TEST DATA FOR 6: Use players 'Davies', 'Muller', 'Lewandowski' and 'Kimmich'. Then, call the function again with players from game.scored
+
+GOOD LUCK 😀
+*/
+
+/*
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+// 1. Create one player array for each team (variables 'players1' and 'players2')
+
+const [players1, players2] = game.players;
+console.log(players1, players2);
+
+// 2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
+
+const [gk1, ...fieldPlayers1] = players1;
+console.log(gk1, fieldPlayers1);
+const [gk2, ...fieldPlayers2] = players2;
+console.log(gk2, fieldPlayers2);
+
+// 3. Create an array 'allPlayers' containing all players of both teams (22 players)
+
+const allPlayers = ['B. Munich', ...players1, 'B. Dortmund', ...players2];
+console.log(allPlayers);
+
+// 4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
+
+const player1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+console.log(player1Final);
+
+// 5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
+
+const {
+  odds: { team1, x: draw, team2 },
+} = game;
+console.log(team1, draw, team2);
+
+// 6. Write a function ('printGoals') that receives an arbitrary number of player names (NOT an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+
+function printGoals(...scorers) {
+  console.log(goals);
+  console.log();
+}
+
+// 7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.
+
+game.odds.team1 > game.odds.team2 || console.log('B. Munich likely to win');
+
+game.odds.team1 < game.odds.team2 && console.log('B. Munich likely to win');
+*/
+
+///////////////////////////////////////
+
+// Coding Challenge #2
+
+/* 
+Let's continue with our football betting app!
+
+1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+
+2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+
+3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+      Odd of victory Bayern Munich: 1.33
+      Odd of draw: 3.25
+      Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+
+BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+      {
+        Gnarby: 1,
+        Hummels: 1,
+        Lewandowski: 2
+      }
+
+GOOD LUCK 😀
+*/
+
+// const game = {
+//   team1: 'Bayern Munich',
+//   team2: 'Borrussia Dortmund',
+//   players: [
+//     [
+//       'Neuer',
+//       'Pavard',
+//       'Martinez',
+//       'Alaba',
+//       'Davies',
+//       'Kimmich',
+//       'Goretzka',
+//       'Coman',
+//       'Muller',
+//       'Gnarby',
+//       'Lewandowski',
+//     ],
+//     [
+//       'Burki',
+//       'Schulz',
+//       'Hummels',
+//       'Akanji',
+//       'Hakimi',
+//       'Weigl',
+//       'Witsel',
+//       'Hazard',
+//       'Brandt',
+//       'Sancho',
+//       'Gotze',
+//     ],
+//   ],
+//   score: '4:0',
+//   scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+//   date: 'Nov 9th, 2037',
+//   odds: {
+//     team1: 1.33,
+//     x: 3.25,
+//     team2: 6.5,
+//   },
+// };
+
+// 2.1 : Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+
+// for (const p of game.scored.entries()) {
+//   console.log(`Goal ${p[0] + 1}: ${p[1]}`);
+// }
+
+// 2.2 : Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+
+// let avr = 0;
+// for (const x of Object.values(game.odds)) {
+//   avr += x;
+// }
+// avr /= Object.values(game.odds).length;
+// console.log(avr);
+
+//  2.3 : Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+//       Odd of victory Bayern Munich: 1.33
+//       Odd of draw: 3.25
+//       Odd of victory Borrussia Dortmund: 6.5
+// Get the team names directly from the game object, don't hardcode them (except for "draw").
+// 	HINT: Note how the odds and the game objects have the same property names 😉
+// const oddy = game.odds;
+
+// for (const [team, odd] of Object.entries(oddy)) {
+//   const teamName = team === 'x' ? 'Draw' : `Victory to ${game[team]}`;
+//   console.log(`Odd of ${teamName}: ${odd}`);
+// }

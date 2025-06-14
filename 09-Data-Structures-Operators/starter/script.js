@@ -23,6 +23,21 @@ const mexicanFoods = new Set([
 ]);
 
 // Data needed for first part of the section
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -30,21 +45,168 @@ const restaurant = {
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`here is your pasta of ${ing1}, ${ing2}, and ${ing3}`);
+  },
+
+  // ES6 enhanced object literals
+  openingHours,
+
+  orderPizza(mainIng, ...otherIng) {
+    console.log(`${mainIng} Pizza with some ${otherIng}`);
   },
 };
+
+///////////////////
+
+// Sets: Collection of unique values (no dupes)  [iterable]
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Gabagool',
+  'Pizza',
+  'Pizza',
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Gabagool',
+]);
+
+console.log(ordersSet);
+console.log(new Set('Remedy'));
+console.log(new Set('Remedy').size);
+console.log(new Set('Remedy').has('R'));
+console.log(new Set('Remedy').has('r'));
+console.log(ordersSet.add('Mortadella'));
+console.log(ordersSet.delete('Pizza'));
+console.log(ordersSet);
+
+// Cant get values outta sets
+
+console.log(ordersSet.clear());
+for (const order of ordersSet) console.log(order);
+
+// Most use case of sets is to remove dupes out of arrays
+
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+
+///////////////////
+
+// Object Values and:
+
+// // Optional Chaining (?.):
+// if (restaurant.openingHours.mon && restaurant.openingHours) {
+//   console.log(restaurant.openingHours.mon.open);
+// }
+// // With optional chaining
+// console.log(restaurant.openingHours.mon?.open);
+// console.log(restaurant.openingHours?.mon?.open);
+
+// const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+// for (const day of days) {
+//   console.log(day);
+//   const open = restaurant.openingHours[day]?.open || 'thu and fri only!';
+//   console.log(`On ${day}, we open at ${open}`);
+// }
+
+/*
+// For of Loop looping over strings
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+for (const item of menu) console.log(item);
+
+for (const [i, el] of menu.entries()) console.log(i, el);
+*/
+
+/*
+const { name, categories, openingHours } = restaurant;
+console.log(name, categories, openingHours);
+
+// Spread Operator
+
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+console.log(badNewArr);
+
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+console.log(...newArr);
+
+const extendMenu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log(extendMenu);
+
+const newMenu = [...restaurant.mainMenu, 'Mortadilla'];
+console.log(newMenu);
+
+// iterables: arrays, strings, maps, sets. NOT objects
+
+const str = 'Stinger';
+const letters = [...str, '', 'S.'];
+console.log(letters);
+
+// const ingredients = [prompt('ing1'), prompt('ing2'), prompt('ing3')];
+// console.log(ingredients);
+
+// restaurant.orderPasta(...ingredients);
+
+*/
+
+/*
+
+// Rest Operator
+
+// SPREAD: becuase ... are on RIGHT side of =
+const arry = [1, 2, 3, ...[4, 5]];
+// REST: becuase ... are on LEFT side  of =
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others);
+
+const [pizza, , Risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, Risotto, otherFood);
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+  return sum;
+};
+/*
+add(1, 2, 3, 4, 5, 6);
+add(1, 2);
+add(0, 0);
+
+const x = [1, 3, 20];
+add(...x);
+
+restaurant.orderPizza('Truffle', 'Tomatos');
+
+// OR Shortcircuit: returns when it encounters first TRUE value
+console.log(false || '');
+const guests = restaurant.numGuests || 20;
+console.log(guests);
+
+// AND shortcircuit: returns when it encounters first FALSE value
+console.log(true && 0);
+
+// Nullish Coalescing Shortcircuit Operator:
+// Nullish: null and undefined
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
+
+*/
+
+/*
 
 // Return multiple things from a function using an array as a return [1, 2];
 const books = [

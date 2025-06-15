@@ -57,8 +57,66 @@ const restaurant = {
   },
 };
 
-///////////////////
+const question = new Map([
+  ['question', 'What is your favorite color?'],
+  [1, 'Red'],
+  [2, 'Yellow'],
+  [3, 'Blue'],
+  [4, 'Green'],
+  ['correct', 3],
+  [true, 'Correct'],
+  [false, 'Try again!'],
+]);
 
+console.log(question);
+
+// Convert object to map
+const hourMap = new Map(Object.entries(openingHours));
+
+// Iterations
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+/*
+/////////////////////////
+// Maps: Data structure used to map values to keys.
+/////////////////////////
+
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Lisbon, Portugal'));
+
+rest
+  .set('categories', ['Italian', 'Pizzaria', 'Mafia'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'we are open')
+  .set(false, 'we are closed');
+
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 21;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+console.log(rest.has('categories'));
+rest.delete(2);
+console.log(rest);
+
+console.log(rest.size);
+rest.clear();
+const arr = [1, 2];
+rest.set(arr, 'Test');
+console.log(rest);
+console.log(rest.size);
+console.log(rest.get(arr));
+
+///////////////////
+*/
+/*
 // Sets: Collection of unique values (no dupes)  [iterable]
 const ordersSet = new Set([
   'Pasta',
@@ -94,6 +152,7 @@ const staffUnique = [...new Set(staff)];
 console.log(staffUnique);
 
 ///////////////////
+*/
 
 // Object Values and:
 

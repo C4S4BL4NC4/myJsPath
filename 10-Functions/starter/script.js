@@ -6,8 +6,7 @@
 //   };
 // };
 
-const greet = greeting => {
-  return name => console.log(`${greeting} ${name}`);
+const greet = greeting => name => console.log(`${greeting} ${name}`);
 };
 
 const greeterHey = greet('Hey');

@@ -155,10 +155,34 @@ const poll = {
     }
   },
 };
-document
-  .querySelector('.poll')
-  .addEventListener('click', poll.registerNewAnswer.bind(poll));
 
-poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
-poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
-poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
+// const poll = {
+//   question: 'What is you favourite programming language?',
+//   options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+//   answers: new Array(4).fill(0),
+//   registerNewAnswer: function () {
+//     const answer = Number(
+//       prompt(this.question + '\n' + this.options.join('\n'))
+//     );
+//   },
+// };
+
+// const displayResults = function (answers, type = 'array') {
+//   if (typeof type === 'string') {
+//     if (type === 'string') {
+//       console.log(answers.join('- '));
+//     } else if (type === 'array') {
+//       console.log(answers);
+//     }
+//   }
+// };
+
+// document
+//   .querySelector('.poll')
+//   .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+// displayResults.call(poll, [5, 2, 3], 'string');
+
+// displayResults.call(poll, [1, 5, 3, 9, 6, 1], 'string');
+
+// displayResults.call(poll, [1, 5, 3, 9, 6, 1]);

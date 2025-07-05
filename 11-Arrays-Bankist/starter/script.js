@@ -73,4 +73,50 @@ const currencies = new Map([
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-/////////////////////////////////////////////////
+// /////////////////////////////////////////////////
+
+// // SLICE: Returns a new array.
+// let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// console.log(arr.slice(2)); // ['c', 'd', 'e']
+// console.log(arr.slice(2, 4)); // ['c', 'd']
+// console.log(arr.slice(-2)); // ['d', 'e']
+// console.log(arr.slice(1, -1)); // ['b', 'c', 'd']
+// console.log(arr.slice()); // Shallow Copy ['a', 'b', 'c', 'd', 'e']
+// console.log([...arr]); // ['a', 'b', 'c', 'd', 'e']
+
+// //SPLICE: Like Slice but Mutates the array. Mainly used to remove the last element of an array.
+
+// arr.splice(-1);
+// console.log(arr); // ['a', 'b', 'c', 'd']
+// arr.splice(1, 2);
+// console.log(arr); // ['a', 'd']
+
+// //REVERSE: Mutates  the original array.
+// arr = ['a', 'b', 'c', 'd', 'e'];
+// const arr2 = ['j', 'i', 'h', 'g', 'f'];
+
+// console.log(arr2.reverse()); // ['f', 'g', 'h', 'i', 'j']
+// console.log(arr2); // ['f', 'g', 'h', 'i', 'j']
+
+// // CONCAT:
+// const letters = arr.concat(arr2); // FIRST.concat(SECOND)
+// console.log(letters); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+// console.log([...arr, ...arr2]);
+
+// // JOIN:
+// console.log(letters.join(' - ')); // a - b - c - d - e - f - g - h - i - j
+
+// ///////////////////////////////////////////////////
+
+const arr = [1, 2, 3];
+
+console.log(arr[0]);
+console.log(arr.at(0));
+
+// Getting the last element
+console.log(arr[arr.length - 1]); // OUTPUT: 3
+console.log(arr.slice(-1)[0]); // OUTPUT: 3
+console.log(arr.at(-1)); // OUTPUT: 3
+console.log(arr[-1]); // OUTPUT: undefined
+// using at or the normal way to get if you want yo count from the end of an array you should use at. Also, for method chaining at is perfect too.

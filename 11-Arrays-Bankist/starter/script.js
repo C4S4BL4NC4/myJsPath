@@ -68,8 +68,8 @@ const displayMovements = function (movements) {
         <div class="movements__type movements__type--${movDirection}">${
       i + 1
     } ${movDirection}</div>
-        <div class="movements__date">0</div>
-        <div class="movements__value">${mov}</div>
+        <div class="movements__date">got my swagger on</div>
+        <div class="movements__value">${Math.abs(mov)}</div>
       </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);

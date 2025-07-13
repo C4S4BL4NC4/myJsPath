@@ -65,13 +65,13 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // /////////////////////////////////////////////////
 
@@ -109,14 +109,96 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // ///////////////////////////////////////////////////
 
-const arr = [1, 2, 3];
+// const arr = [1, 2, 3];
 
-console.log(arr[0]);
-console.log(arr.at(0));
+// console.log(arr[0]);
+// console.log(arr.at(0));
 
-// Getting the last element
-console.log(arr[arr.length - 1]); // OUTPUT: 3
-console.log(arr.slice(-1)[0]); // OUTPUT: 3
-console.log(arr.at(-1)); // OUTPUT: 3
-console.log(arr[-1]); // OUTPUT: undefined
+// // Getting the last element
+// console.log(arr[arr.length - 1]); // OUTPUT: 3
+// console.log(arr.slice(-1)[0]); // OUTPUT: 3
+// console.log(arr.at(-1)); // OUTPUT: 3
+// console.log(arr[-1]); // OUTPUT: undefined
 // using at or the normal way to get if you want yo count from the end of an array you should use at. Also, for method chaining at is perfect too.
+
+///////////////////////////////////////////////////
+
+// ----- FOREACH -----
+
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// for (const [i, movement] of movements.entries()) {
+//   console.log(
+//     `${i + 1}: ${movement > 0 ? 'deopsited' : 'withdrown'} ${movement}$`
+//   );
+// }
+// // Orders of forEach anon function MATTER!
+// movements.forEach(function (movement, index, array) {
+//   console.log(
+//     `${index}: ${movement > 0 ? 'deopsited' : 'withdrown'} ${movement}$
+//     ${array}`
+//   );
+// });
+
+/*
+  0: deopsited 200$
+    200,450,-400,3000,-650,-130,70,1300
+  1: deopsited 450$
+    200,450,-400,3000,-650,-130,70,1300
+  2: withdrown -400$
+    200,450,-400,3000,-650,-130,70,1300
+ 3: deopsited 3000$
+    200,450,-400,3000,-650,-130,70,1300
+ 4: withdrown -650$
+    200,450,-400,3000,-650,-130,70,1300
+ 5: withdrown -130$
+    200,450,-400,3000,-650,-130,70,1300
+ 6: deopsited 70$
+    200,450,-400,3000,-650,-130,70,1300
+ 7: deopsited 1300$
+    200,450,-400,3000,-650,-130,70,1300
+*/
+
+// BTS:
+// 0: function (200)
+// 1: function (450)
+// 2: function (-400)
+// 3: function (3000)
+// ...
+///////////////////////////////////////////////////
+
+// ------ FOREACH WITH MAPS AND SETS ------ \\
+
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function (val, key, map) {
+  console.log(`${key}: ${val}`);
+});
+/*
+---- OUTPUT ----
+    USD: United States dollar
+    EUR: Euro
+    GBP: Pound sterling
+*/
+
+// Set
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+
+console.log(currenciesUnique);
+
+currenciesUnique.forEach(function (val, key, map) {
+  console.log(`${key}: ${val}`);
+});
+
+/*
+---- OUTPUT ----
+    USD: USD
+    GBP: GBP
+    EUR: EUR
+*/
+
+// A Set doesn't have a key neither an index so the designer of forEach decided to keep the val as key for set to remain consistent.

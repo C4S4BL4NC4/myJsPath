@@ -62,7 +62,7 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 const displayMovements = function (movements) {
-  movements.array.forEach(function (mov, i) {
+  movements.forEach(function (mov, i) {
     const movDirection = mov < 0 ? 'withdrawal' : 'deposit';
     const html = `<div class="movements__row">
         <div class="movements__type movements__type--${movDirection}">${
@@ -73,6 +73,8 @@ const displayMovements = function (movements) {
       </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
+
+    console.log(mov, i);
   });
 };
 

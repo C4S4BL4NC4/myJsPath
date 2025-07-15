@@ -77,8 +77,41 @@ const displayMovements = function (movements) {
     console.log(mov, i);
   });
 };
-
 displayMovements(account1.movements);
+
+/*
+const mv = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const deposits = mv.filter(function (elm) {
+  return elm > 0;
+});
+
+console.log(deposits); // [200, 450, 3000, 70, 1300]
+
+const withdrawals = mv.filter(elm => elm < 0);
+
+console.log(withdrawals); // [-400, -650, -130]*/
+
+// Reduce method arrays
+
+const mv = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const balance = mv.reduce(function (acc, cur, i, arr) {
+  console.log(`Iter ${i}: Accu ${acc}`);
+  return acc + cur;
+  /*
+Iter 0: Accu 0
+Iter 1: Accu 200
+Iter 2: Accu 650
+Iter 3: Accu 250
+Iter 4: Accu 3250
+Iter 5: Accu 2600
+Iter 6: Accu 2470
+Iter 7: Accu 2540
+*/
+}, 0);
+
+console.log(balance); // 3840
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES

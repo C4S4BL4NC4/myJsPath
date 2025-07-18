@@ -314,8 +314,8 @@ TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 
 GOOD LUCK 😀
 */
-/*
-const calcAverageHumanAge = function (ages) {
+
+const calcAverageHumanAge1 = function (ages) {
   const dogHumanAges = ages.map(dog => {
     if (dog <= 2) return 2 * dog;
     else return (16 + dog) * 4;
@@ -340,9 +340,9 @@ const calcAverageHumanAge = function (ages) {
     `);
 };
 
-calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
-calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
-*/
+calcAverageHumanAge1([5, 2, 4, 1, 15, 8, 3]);
+calcAverageHumanAge1([16, 6, 10, 5, 6, 1, 4]);
+
 /*
 const eurToUsd = 1.1;
 const totalDepositsUSD = account1.movements
@@ -351,3 +351,30 @@ const totalDepositsUSD = account1.movements
   .reduce((acc, mov) => acc + mov, 0);
 console.log(totalDepositsUSD);
 */
+///////////////////////////////////////
+// Coding Challenge #3
+
+/* 
+Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
+
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
+const calcAverageHumanAge = function (ages) {
+  const avr = ages
+    .map(dog => {
+      if (dog <= 2) return 2 * dog;
+      else return (16 + dog) * 4;
+    })
+    .filter(dog => {
+      return dog > 18;
+    })
+    .reduce((accumulator, curelm, i, arr) => {
+      return accumulator + curelm / arr.length;
+    }, 0);
+
+  console.log('Average Dog Age: ' + avr);
+};
+calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);

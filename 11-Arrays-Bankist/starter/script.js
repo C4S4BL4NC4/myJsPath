@@ -62,6 +62,7 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
   movements.forEach(function (mov, i) {
     const movDirection = mov < 0 ? 'withdrawal' : 'deposit';
     const html = `<div class="movements__row">
@@ -77,7 +78,20 @@ const displayMovements = function (movements) {
     console.log(mov, i);
   });
 };
+
+const calcBalance = function (movements) {
+  const balance = movements.reduce((acc, elm) => acc + elm, 0);
+  labelBalance.textContent = `${balance} TRY`;
+};
+
+const max = account1.movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, 0);
+console.log('Max: ' + max);
+
 displayMovements(account1.movements);
+calcBalance(account1.movements);
 
 /*
 const mv = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -94,24 +108,28 @@ console.log(withdrawals); // [-400, -650, -130]*/
 
 // Reduce method arrays
 
+/*
+
 const mv = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const balance = mv.reduce(function (acc, cur, i, arr) {
   console.log(`Iter ${i}: Accu ${acc}`);
   return acc + cur;
-  /*
-Iter 0: Accu 0
-Iter 1: Accu 200
-Iter 2: Accu 650
-Iter 3: Accu 250
-Iter 4: Accu 3250
-Iter 5: Accu 2600
-Iter 6: Accu 2470
-Iter 7: Accu 2540
-*/
 }, 0);
 
+// Iter 0: Accu 0
+// Iter 1: Accu 200
+// Iter 2: Accu 650
+// Iter 3: Accu 250
+// Iter 4: Accu 3250
+// Iter 5: Accu 2600
+// Iter 6: Accu 2470
+// Iter 7: Accu 2540
+
 console.log(balance); // 3840
+
+*/
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -253,3 +271,50 @@ currenciesUnique.forEach(function (val, key, map) {
 */
 
 // A Set doesn't have a key neither an index so the designer of forEach decided to keep the val as key for set to remain consistent.
+
+// Coding Challenge #2
+
+/* 
+Let's go back to Julia and Kate's study about dogs. This time, they want to convert dog ages to human ages and calculate the average age of the dogs in their study.
+
+Create a function 'calcAverageHumanAge', which accepts an arrays of dog's ages ('ages'), and does the following things in order:
+
+1. Calculate the dog age in human years using the following formula: if the dog is <= 2 years old, humanAge = 2 * dogAge. If the dog is > 2 years old, humanAge = 16 + dogAge * 4.
+2. Exclude all dogs that are less than 18 human years old (which is the same as keeping dogs that are at least 18 years old)
+3. Calculate the average human age of all adult dogs (you should already know from other challenges how we calculate averages 😉)
+4. Run the function for both test datasets
+
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
+/*
+const calcAverageHumanAge = function (ages) {
+  const dogHumanAges = ages.map(dog => {
+    if (dog <= 2) return 2 * dog;
+    else return (16 + dog) * 4;
+  });
+  const filteredHumanDogs = dogHumanAges.filter(dog => dog > 18);
+  const total = filteredHumanDogs.reduce((accumulator, curelm, index) => {
+    return accumulator + curelm;
+  }, 0);
+
+  console.log(`
+    Original Array of Dog Ages:
+    ${ages}
+
+    Tunred Into Human Ages: 
+    ${dogHumanAges}
+
+    Excluding Non-Adults Dogs:
+    ${filteredHumanDogs}
+
+    Average Dog Age:
+    ${total / filteredHumanDogs.length}
+    `);
+};
+
+calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+*/

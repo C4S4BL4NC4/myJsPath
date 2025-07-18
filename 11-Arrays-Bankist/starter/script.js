@@ -69,30 +69,47 @@ const displayMovements = function (movements) {
         <div class="movements__type movements__type--${movDirection}">${
       i + 1
     } ${movDirection}</div>
-        <div class="movements__date">got my swagger on</div>
-        <div class="movements__value">${Math.abs(mov)}</div>
+        <div class="movements__date">FIX DArecieved</div>
+        <div class="movements__value">${Math.abs(mov)}€</div>
       </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
-
-    console.log(mov, i);
   });
 };
 
 const calcBalance = function (movements) {
   const balance = movements.reduce((acc, elm) => acc + elm, 0);
-  labelBalance.textContent = `${balance} TRY`;
+  labelBalance.textContent = `${balance} €`;
 };
 
-const max = account1.movements.reduce((acc, mov) => {
-  if (acc > mov) return acc;
-  else return mov;
-}, 0);
-console.log('Max: ' + max);
+const recieved = function (movements) {
+  const income = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov);
+  labelSumIn.textContent = `${income}€`;
+};
+const sent = function (movements) {
+  const moneySent = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + Math.abs(mov));
+  labelSumOut.textContent = `${moneySent}€`;
+};
+const intrest = function (movements) {
+  const intr = movements
+    .filter(mv => mv > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${intr}€`;
+};
 
-displayMovements(account1.movements);
-calcBalance(account1.movements);
-
+// When Loading someone's account run funcitons only
+const freak = account1.movements;
+displayMovements(freak);
+calcBalance(freak);
+recieved(freak);
+sent(freak);
+intrest(freak);
 /*
 const mv = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
@@ -272,6 +289,14 @@ currenciesUnique.forEach(function (val, key, map) {
 
 // A Set doesn't have a key neither an index so the designer of forEach decided to keep the val as key for set to remain consistent.
 
+/*
+const max = account1.movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, 0);
+console.log('Max: ' + max);
+*/
+
 // Coding Challenge #2
 
 /* 
@@ -317,4 +342,12 @@ const calcAverageHumanAge = function (ages) {
 
 calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+*/
+/*
+const eurToUsd = 1.1;
+const totalDepositsUSD = account1.movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositsUSD);
 */

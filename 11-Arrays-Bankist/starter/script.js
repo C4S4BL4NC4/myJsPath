@@ -61,6 +61,17 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const createUsernames = function (arr) {
+  arr.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(word => word[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
+
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
   movements.forEach(function (mov, i) {
@@ -85,13 +96,13 @@ const calcBalance = function (movements) {
 const recieved = function (movements) {
   const income = movements
     .filter(mov => mov > 0)
-    .reduce((acc, mov) => acc + mov);
+    .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${income}€`;
 };
 const sent = function (movements) {
   const moneySent = movements
-    .filter(mov => mov < 0)
-    .reduce((acc, mov) => acc + Math.abs(mov));
+    // .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + Math.abs(mov), 0);
   labelSumOut.textContent = `${moneySent}€`;
 };
 const intrest = function (movements) {
@@ -100,16 +111,46 @@ const intrest = function (movements) {
     .map(deposit => (deposit * 1.2) / 100)
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${intr}€`;
+  labelSumInterest.textContent = `${intr.toFixed(2)}€`;
 };
 
+let currentLogin = [];
+btnLogin.addEventListener('click', function (event) {
+  event.preventDefault(); // To prevent the submit that is default for forms.
+  currentLogin = accounts.find(
+    account => inputLoginUsername.value === account.username
+  );
+
+  if (currentLogin?.pin === Number(inputLoginPin.value)) {
+    console.log('Successful Login');
+    // Welcome
+    labelWelcome.textContent = `Welcome back, ${
+      currentLogin.owner.split(' ')[0]
+    }`;
+    // Display UI
+    containerApp.style.opacity = 100;
+    displayMovements(currentLogin.movements);
+    calcBalance(currentLogin.movements);
+    recieved(currentLogin.movements);
+    sent(currentLogin.movements);
+    intrest(currentLogin.movements);
+  } else {
+    console.log('Wrong Credientials');
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+
+  if (amount)
+});
+
 // When Loading someone's account run funcitons only
-const freak = account1.movements;
-displayMovements(freak);
-calcBalance(freak);
-recieved(freak);
-sent(freak);
-intrest(freak);
+
 /*
 const mv = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
@@ -314,7 +355,7 @@ TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 
 GOOD LUCK 😀
 */
-
+/*
 const calcAverageHumanAge1 = function (ages) {
   const dogHumanAges = ages.map(dog => {
     if (dog <= 2) return 2 * dog;
@@ -342,7 +383,7 @@ const calcAverageHumanAge1 = function (ages) {
 
 calcAverageHumanAge1([5, 2, 4, 1, 15, 8, 3]);
 calcAverageHumanAge1([16, 6, 10, 5, 6, 1, 4]);
-
+*/
 /*
 const eurToUsd = 1.1;
 const totalDepositsUSD = account1.movements
@@ -362,6 +403,7 @@ TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 
 GOOD LUCK 😀
 */
+/*
 const calcAverageHumanAge = function (ages) {
   const avr = ages
     .map(dog => {
@@ -377,4 +419,7 @@ const calcAverageHumanAge = function (ages) {
 
   console.log('Average Dog Age: ' + avr);
 };
-calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]); // 92
+*/
+// ------------ FIND ----------
+// Just like filter find need a callback function that returns a bool also find returns the first element that satisfies the condition (doesn't return an array)

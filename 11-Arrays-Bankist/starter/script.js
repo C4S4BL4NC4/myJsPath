@@ -88,9 +88,9 @@ const displayMovements = function (movements) {
   });
 };
 
-const calcBalance = function (movements) {
-  const balance = movements.reduce((acc, elm) => acc + elm, 0);
-  labelBalance.textContent = `${balance} €`;
+const calcBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, elm) => acc + elm, 0);
+  labelBalance.textContent = `${acc.balance} €`;
 };
 
 const recieved = function (movements) {
@@ -101,7 +101,7 @@ const recieved = function (movements) {
 };
 const sent = function (movements) {
   const moneySent = movements
-    // .filter(mov => mov < 0)
+    .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + Math.abs(mov), 0);
   labelSumOut.textContent = `${moneySent}€`;
 };
@@ -113,10 +113,20 @@ const intrest = function (movements) {
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${intr.toFixed(2)}€`;
 };
+const updatePage = function (currentLogin) {
+  displayMovements(currentLogin.movements);
+  calcBalance(currentLogin);
+  recieved(currentLogin.movements);
+  sent(currentLogin.movements);
+  intrest(currentLogin.movements);
+  console.log('PAGE UPDATED');
+};
 
 let currentLogin = [];
+
 btnLogin.addEventListener('click', function (event) {
   event.preventDefault(); // To prevent the submit that is default for forms.
+
   currentLogin = accounts.find(
     account => inputLoginUsername.value === account.username
   );
@@ -129,11 +139,7 @@ btnLogin.addEventListener('click', function (event) {
     }`;
     // Display UI
     containerApp.style.opacity = 100;
-    displayMovements(currentLogin.movements);
-    calcBalance(currentLogin.movements);
-    recieved(currentLogin.movements);
-    sent(currentLogin.movements);
-    intrest(currentLogin.movements);
+    updatePage(currentLogin);
   } else {
     console.log('Wrong Credientials');
   }
@@ -146,7 +152,23 @@ btnTransfer.addEventListener('click', function (e) {
     acc => acc.username === inputTransferTo.value
   );
 
-  if (amount)
+  console.log('button pressed ');
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentLogin.balance >= amount &&
+    receiverAcc?.username !== currentLogin.username
+  ) {
+    console.log('Valid Transfer');
+    console.log(currentLogin, currentLogin.balance, amount, receiverAcc);
+    currentLogin.balance -= amount;
+    currentLogin.movements.push(-1 * amount);
+    receiverAcc.movements.push(amount);
+    updatePage(currentLogin);
+  } else {
+    console.log('Invalid Transfer');
+  }
 });
 
 // When Loading someone's account run funcitons only

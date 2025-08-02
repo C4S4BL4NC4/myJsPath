@@ -169,6 +169,25 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  // Bank Rule: grant loan if at least there's 1 deposit with %10 of the requested loan amount.
+  const loanAmount = Number(inputLoanAmount.value);
+  console.log(
+    'Loan Button Working',
+    loanAmount,
+    currentLogin.movements.some(ent => ent > 0)
+  );
+  if (
+    loanAmount > 0 &&
+    currentLogin.movements.some(mov => mov > 0 && mov / loanAmount >= 0.1)
+  ) {
+    console.log('Valid Loan Granted');
+    currentLogin.movements.push(loanAmount);
+    updatePage(currentLogin);
+  }
+});
+
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
   const confirmUsername = inputCloseUsername.value;
@@ -479,3 +498,5 @@ See also the find() method, which returns the first element that satisfies the t
 
 // console.log(array.findIndex(isLargeNumber));
 // // Expected output: 3
+
+//

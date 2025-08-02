@@ -152,8 +152,6 @@ btnTransfer.addEventListener('click', function (e) {
     acc => acc.username === inputTransferTo.value
   );
 
-  console.log('button pressed ');
-
   if (
     amount > 0 &&
     receiverAcc &&
@@ -168,6 +166,28 @@ btnTransfer.addEventListener('click', function (e) {
     updatePage(currentLogin);
   } else {
     console.log('Invalid Transfer');
+  }
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  const confirmUsername = inputCloseUsername.value;
+  const confirmPin = Number(inputClosePin.value);
+  console.log(confirmUsername, confirmPin);
+  const accIndex = accounts.findIndex(acc => acc.username === confirmUsername);
+
+  // Confirm the account's existance
+  if (
+    currentLogin.pin === confirmPin &&
+    currentLogin.username === confirmUsername
+  ) {
+    // Delete
+    accounts.splice(accIndex, 1);
+
+    // Logout Hide UI
+    containerApp.style.opacity = 0;
+    labelWelcome.textContent = 'Log in to get started';
+    console.log(`${currentLogin.username} has been deleted!`);
   }
 });
 
@@ -445,3 +465,17 @@ calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]); // 92
 */
 // ------------ FIND ----------
 // Just like filter find need a callback function that returns a bool also find returns the first element that satisfies the condition (doesn't return an array)
+
+// ------------- findIndex -------------
+/*
+The findIndex() method of Array instances returns the index of the first element in an array that satisfies the provided testing function. If no elements satisfy the testing function, -1 is returned.
+
+See also the find() method, which returns the first element that satisfies the testing function (rather than its index).
+*/
+
+// const array = [5, 12, 8, 130, 44];
+
+// const isLargeNumber = (element) => element > 13;
+
+// console.log(array.findIndex(isLargeNumber));
+// // Expected output: 3

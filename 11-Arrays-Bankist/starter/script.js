@@ -61,6 +61,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+let isSorted = false;
+
 const createUsernames = function (arr) {
   arr.forEach(function (acc) {
     acc.username = acc.owner
@@ -77,9 +79,7 @@ const displayMovements = function (movements) {
   movements.forEach(function (mov, i) {
     const movDirection = mov < 0 ? 'withdrawal' : 'deposit';
     const html = `<div class="movements__row">
-        <div class="movements__type movements__type--${movDirection}">${
-      i + 1
-    } ${movDirection}</div>
+        <div class="movements__type movements__type--${movDirection}">${movDirection}</div>
         <div class="movements__date">FIX DArecieved</div>
         <div class="movements__value">${Math.abs(mov)}€</div>
       </div>`;
@@ -207,6 +207,18 @@ btnClose.addEventListener('click', function (e) {
     containerApp.style.opacity = 0;
     labelWelcome.textContent = 'Log in to get started';
     console.log(`${currentLogin.username} has been deleted!`);
+  }
+});
+
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  const sorted = currentLogin.movements.sort((a, b) => a - b);
+  if (isSorted === false) {
+    displayMovements(sorted);
+    isSorted = true;
+  } else if (isSorted === true) {
+    displayMovements(currentLogin.movements.sort((a, b) => b - a));
+    isSorted = false;
   }
 });
 
@@ -533,6 +545,7 @@ BONUS: What's the average weight of the heaviest breed that likes to fetch? HINT
 TEST DATA:
 */
 
+/*
 const breeds = [
   {
     breed: 'German Shepherd',
@@ -628,3 +641,26 @@ console.log(
       .map(dog => dog.averageWeight)
   )
 );
+*/
+
+// Sorting arrays array.sort()
+// Strings
+// const champs = ['Annie', 'Zed', 'Ekko', 'Jayce', 'Warwick', 'Corki', 'Braum'];
+
+// console.log(champs);
+// console.log(champs.sort());
+
+// // Numbers
+// const nums = [-15, 55, 32, 12, 9, 35];
+// console.log(nums);
+
+// // return < 0, A, B
+// // return > 0, B, A
+// // console.log(
+// //   nums.sort((a, b) => {
+// //     if (a > b) return 1; // Return Something greater than 0
+// //     if (b > a) return -1; // Retrun Something negative
+// //   })
+// // );
+// console.log(nums.sort((a, b) => a - b));
+// console.log(nums.sort((a, b) => b - a));

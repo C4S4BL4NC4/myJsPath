@@ -620,3 +620,11 @@ console.log(
 console.log(breeds.map(dog => dog.activities.length).some(act => act >= 3));
 
 // BONUS: What's the average weight of the heaviest breed that likes to fetch? HINT: Use the "Math.max" method along with the ... operator.
+
+console.log(
+  Math.max(
+    ...breeds
+      .filter(dog => dog.activities.includes('fetch'))
+      .map(dog => dog.averageWeight)
+  )
+);

@@ -664,3 +664,9 @@ console.log(
 // // );
 // console.log(nums.sort((a, b) => a - b));
 // console.log(nums.sort((a, b) => b - a));
+
+// Array Grouping
+const almos = [-200, 34, -500, 64, 655, 100];
+console.log(almos);
+
+const groupedMovements = Object.groupBy();

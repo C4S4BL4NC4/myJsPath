@@ -674,8 +674,8 @@ console.log(
 // );
 // console.log(groupAlmos);
 
-const groupedByActivity = Object.groupBy(accounts.account1, account => {
-  const movementCount = account.movements.length;
+const groupedByActivity = Object.groupBy(accounts.account1, acc => {
+  const movementCount = acc.movements.length;
   if (movementCount >= 8) return 'Super Active';
   if (movementCount >= 4) return 'Active';
   if (movementCount >= 1) return 'Moderate';

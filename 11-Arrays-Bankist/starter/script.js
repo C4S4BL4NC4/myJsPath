@@ -666,7 +666,19 @@ console.log(
 // console.log(nums.sort((a, b) => b - a));
 
 // Array Grouping
-const almos = [-200, 34, -500, 64, 655, 100];
-console.log(almos);
+// const almos = [-200, 34, -500, 64, 655, 100];
+// console.log(almos);
 
-const groupedMovements = Object.groupBy();
+// const groupAlmos = Object.groupBy(almos, num =>
+//   num > 0 ? 'deposits' : 'withdrawals'
+// );
+// console.log(groupAlmos);
+
+const groupedByActivity = Object.groupBy(accounts.account1, account => {
+  const movementCount = account.movements.length;
+  if (movementCount >= 8) return 'Super Active';
+  if (movementCount >= 4) return 'Active';
+  if (movementCount >= 1) return 'Moderate';
+});
+
+console.log(groupedByActivity);

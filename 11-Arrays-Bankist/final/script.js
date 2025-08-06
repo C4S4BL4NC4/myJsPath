@@ -923,7 +923,6 @@ const dogs = [
 GOOD LUCK 😀
 */
 
-/*
 const dogs = [
   { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
   { weight: 8, curFood: 200, owners: ['Matilda'] },
@@ -994,4 +993,3 @@ console.log(dogsGroupedByOwners);
 // 10.
 const dogsSorted = dogs.toSorted((a, b) => a.recFood - b.recFood);
 console.log(dogsSorted);
-*/

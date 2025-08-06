@@ -752,3 +752,183 @@ console.log(
 // // [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 // console.log(dec);
 // // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] Orignal intact
+
+// // Array Method Practice
+// // 1.
+// const bankDepositSum = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov > 0)
+//   .reduce((acc, cur) => cur + acc, 0);
+
+// console.log(bankDepositSum);
+// // 2. How many depos with atleast $1000
+// const highBankDepo = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov > 0 && mov >= 1000).length;
+// console.log(highBankDepo);
+
+// // 3. Advanced Reduce
+// const { deposits, withdrawals } = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce(
+//     (sums, cur) => {
+//       cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+//       return sums;
+//     },
+//     { deposits: 0, withdrawals: 0 }
+//   );
+
+// console.log(deposits, withdrawals);
+
+// // 4.
+
+// const convertTitleCase = function (title) {
+//   // Exceptions “and,” “as,” “but,” “for,” “if,” “nor,” “or,” “so,” “yet”, “a,” “an,” “the”
+//   const Exceptions = [
+//     'and',
+//     'as',
+//     'but',
+//     'for',
+//     'if',
+//     'nor',
+//     'or',
+//     'so',
+//     'yet',
+//     'a',
+//     'an',
+//     'the',
+//   ];
+//   console.log(title);
+//   let Words = [];
+
+//   title
+//     .toLowerCase()
+//     .split(' ')
+//     .forEach((word, i) => {
+//       if (!Exceptions.includes(word)) {
+//         const [firstLetter, ...remainingLetters] = word;
+//         Words[i] = firstLetter.toUpperCase() + remainingLetters.join('');
+//       } else {
+//         Words[i] = word;
+//       }
+//     });
+
+//   return Words?.join(' ');
+// };
+
+// console.log(
+//   convertTitleCase(
+//     'aN oWL pErChEd oN tHe bRaNcH, aNd aS It wAtChEd, bUt fOr a mOuSe, iF nOr a sOuNd, oR fLiGhT—sO sWiFt, yEt bRiEf.'
+//   )
+// );
+// console.log(
+//   convertTitleCase(
+//     'aN aNt cRaWlEd oN tHE lOg, aNd aS iT pAuSeD—bUt fOr a cRuMb, iF nOr a bReEzE, oR sHaDoW... sO cLoSe, yEt gOn!'
+//   )
+// );
+
+///////////////////////////////////////
+// Coding Challenge #5
+
+/* 
+Julia and Kate are still studying dogs. This time they are want to figure out if the dogs in their are eating too much or too little food.
+
+- Formula for calculating recommended food portion: recommendedFood = weight ** 0.75 * 28. (The result is in grams of food, and the weight needs to be in kg)
+- Eating too much means the dog's current food portion is larger than the recommended portion, and eating too little is the opposite.
+- Eating an okay amount means the dog's current food portion is within a range 10% above and below the recommended portion (see hint).
+
+YOUR TASKS:
+1. Loop over the array containing dog objects, and for each dog, calculate the recommended food portion (recFood) and add it to the object as a new property. Do NOT create a new array, simply loop over the array (We never did this before, so think about how you can do this without creating a new array).
+2. Find Sarah's dog and log to the console whether it's eating too much or too little. HINT: Some dogs have multiple users, so you first need to find Sarah in the owners array, and so this one is a bit tricky (on purpose) 🤓
+3. Create an array containing all owners of dogs who eat too much (ownersTooMuch) and an array with all owners of dogs who eat too little (ownersTooLittle).
+4. Log a string to the console for each array created in 3., like this: "Matilda and Alice and Bob's dogs eat too much!" and "Sarah and John and Michael's dogs eat too little!"
+5. Log to the console whether there is ANY dog eating EXACTLY the amount of food that is recommended (just true or false)
+6. Log to the console whether ALL of the dogs are eating an OKAY amount of food (just true or false)
+7. Create an array containing the dogs that are eating an OKAY amount of food (try to reuse the condition used in 6.)
+8. Group the dogs into the following 3 groups: 'exact', 'too-much' and 'too-little', based on whether they are eating too much, too little or the exact amount of food, based on the recommended food portion.
+9. Group the dogs by the number of owners they have
+10. Sort the dogs array by recommended food portion in an ascending order. Make sure to NOT mutate the original array!
+
+HINT 1: Use many different tools to solve these challenges, you can use the summary lecture to choose between them 😉
+HINT 2: Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
+
+TEST DATA:
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John', 'Leo'] },
+  { weight: 18, curFood: 244, owners: ['Joe'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+GOOD LUCK 😀
+*/
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John', 'Leo'] },
+  { weight: 18, curFood: 244, owners: ['Joe'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+// 1.
+
+// recFunc
+
+const recFood = function (weight) {
+  return Math.floor(weight ** 0.75 * 28);
+};
+
+dogs.forEach((dog, i) => {
+  dog.recFood = recFood(dog.weight);
+  if (dog.curFood > dog.recFood * 0.9 && dog.curFood < dog.recFood * 1.1) {
+    console.log(`Doggo Number ${i + 1} is healthy 😎👍`);
+    dog.flag = 0;
+  } else {
+    console.log(`Doggo Number ${i + 1} is not healthy vro 😭🪫`);
+    if (dog.curFood > dog.recFood * 1.1) {
+      dog.flag = 1;
+    } else {
+      dog.flag = -1;
+    }
+  }
+});
+
+console.log(dogs);
+
+// 2. Find Sarah's dog and log to the console whether it's eating too much or too little. HINT: Some dogs have multiple users, so you first need to find Sarah in the owners array, and so this one is a bit tricky (on purpose) 🤓
+
+const sarahDog = dogs.find(dog => {
+  if (dog.owners.includes('Sarah')) {
+    return dog;
+  }
+});
+
+console.log(
+  `Sarah's Dogs has been eating ${
+    sarahDog.curFood / sarahDog.recFood > 0.1 ? 'good 🫃' : 'shit 💩'
+  }`
+);
+
+// 3.
+
+const ownersTooMuch = dogs
+  .filter(dog => dog.flag === 1)
+  .flatMap(dog => dog.owners);
+
+console.log(ownersTooMuch);
+
+const ownersTooLittle = dogs
+  .filter(dog => dog.flag === -1)
+  .flatMap(dog => dog.owners);
+
+console.log(ownersTooLittle);
+
+// 4.
+
+console.log(`${ownersTooMuch.join(' and ')}'s dogs eat too much!`);
+
+console.log(`${ownersTooLittle.join(' and ')}'s dogs eat too little!`);
+
+// 5.

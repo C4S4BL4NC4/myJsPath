@@ -10,6 +10,7 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+  type: 'premium',
 };
 
 const account2 = {
@@ -17,6 +18,7 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+  type: 'premium',
 };
 
 const account3 = {
@@ -24,6 +26,7 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
+  type: 'standard',
 };
 
 const account4 = {
@@ -31,9 +34,18 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+  type: 'investment',
 };
 
-const accounts = [account1, account2, account3, account4];
+const account5 = {
+  owner: 'Max Caufield',
+  movements: [],
+  interestRate: 1,
+  pin: 5555,
+  type: 'basic',
+};
+
+const accounts = [account1, account2, account3, account4, account5];
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -674,11 +686,69 @@ console.log(
 // );
 // console.log(groupAlmos);
 
-const groupedByActivity = Object.groupBy(accounts.account1, acc => {
-  const movementCount = acc.movements.length;
-  if (movementCount >= 8) return 'Super Active';
-  if (movementCount >= 4) return 'Active';
-  if (movementCount >= 1) return 'Moderate';
-});
+// const groupedByActivity = Object.groupBy(accounts, acc => {
+//   const movementCount = acc.movements.length;
+//   if (movementCount >= 8) return 'Super';
+//   if (movementCount >= 4) return 'Active';
+//   if (movementCount >= 1) return 'Moderate';
+//   return 'Inactive';
+// });
 
-console.log(groupedByActivity);
+// console.log(groupedByActivity);
+
+// const groupedAccounts = Object.groupBy(accounts, ({ type }) => type);
+
+// console.log(groupedAccounts);
+
+/////////////////////////////////////////
+// Generating Arrays .fill():
+
+// const x = new Array(7);
+// const y = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// console.log(x);
+// // Array(7) [ <7 empty slots> ]
+
+// // There is only one thing we can call of this empty array which is .fill() [Mutates the array] x.fill(filler, beginIndex, endIndexExcluded)
+// x.fill(1);
+// console.log(x);
+// // [ 1, 1, 1, 1, 1, 1, 1 ]
+// // You can also call it on an exiting array thus mutating it
+// y.fill('Jeff', 2, 6);
+// console.log(y);
+// // [ 1, 2, "Jeff", "Jeff", "Jeff", "Jeff", 7, 8, 9 ]
+
+// ///////////////////////////////////
+// // Array.from()
+
+// const arr = Array.from({ length: 7 }, () => 1);
+
+// console.log(arr);
+// // [ 1, 1, 1, 1, 1, 1, 1 ]
+
+// // _ in parameters means a throwaway parameter that is not used(Convention)
+
+// const z = Array.from({ length: 7 }, (_, i) => i + 1);
+
+// console.log(z);
+// // [ 1, 2, 3, 4, 5, 6, 7 ]
+
+///////////////////////////////
+// Mini Challenge 100 dice rolls
+
+// const dice100 = Array.from({ length: 100 }, roll =>
+//   Math.floor(Math.random() * 6 + 1)
+// );
+
+// console.log(dice100);
+// // Get 100 Rolls
+/////////////////////////////////
+// Non-Destructive Methods toReverse, toSort, toSpliced (Non-Mutating)
+
+// let dec = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+// console.log(dec);
+// // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+// const reversedDec = dec.toReversed();
+// console.log(reversedDec);
+// // [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+// console.log(dec);
+// // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] Orignal intact

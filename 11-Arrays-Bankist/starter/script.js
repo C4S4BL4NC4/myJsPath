@@ -932,3 +932,29 @@ console.log(`${ownersTooMuch.join(' and ')}'s dogs eat too much!`);
 console.log(`${ownersTooLittle.join(' and ')}'s dogs eat too little!`);
 
 // 5.
+
+console.log(dogs.some(dog => dog.recFood === dog.curFood));
+// 6.
+
+console.log(dogs.every(dog => dog.recFood === dog.curFood));
+
+// 7.
+const dogsEatingOkay = dogs.filter(dog => dog.flag === 0);
+console.log(dogsEatingOkay);
+
+// 8. exact toomuch tolittle
+
+const groupedDogs = Object.groupBy(dogs, dog => {
+  if (dog.flag === 1) return 'tooMuch';
+  if (dog.flag === 0) return 'exact';
+  return 'tooLittle';
+});
+
+console.log(groupedDogs);
+
+// 9.
+const dogsGroupedByOwners = Object.groupBy(dogs, dog => dog.owners.length);
+
+// 10.
+const sortedDogs = dogs.flatMap(dog => dog.recFood).toSorted((a, b) => a - b);
+console.log(sortedDogs);

@@ -89,12 +89,21 @@ const displayMovements = function (movements, sort = false) {
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
+    // Implemented Date Per Transaction
+
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+    <div class="movements__date">${new Date(
+      currentAccount.movementsDates[i]
+    ).getDate()}/${new Date(
+      currentAccount.movementsDates[i]
+    ).getMonth()}/${new Date(
+      currentAccount.movementsDates[i]
+    ).getFullYear()}</div>
+        <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
 
@@ -104,19 +113,19 @@ const displayMovements = function (movements, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -126,7 +135,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -197,7 +206,8 @@ btnTransfer.addEventListener('click', function (e) {
     // Doing the transfer
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
-
+    // Add Dates
+    currentAccount.movementsDates.push(Date.now());
     // Update UI
     updateUI(currentAccount);
   }
@@ -206,11 +216,14 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = +inputLoanAmount.value;
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
+
+    // ADDED ADDED ADDED ADDED
+    currentAccount.movementsDates.push(Date.now());
 
     // Update UI
     updateUI(currentAccount);
@@ -245,8 +258,19 @@ let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
   displayMovements(currentAccount.movements, !sorted);
+
   sorted = !sorted;
 });
+
+// As of CurrentDate
+
+labelDate.innerHTML = `${new Date(Date.now()).getFullYear()}/${new Date(
+  Date.now()
+).getUTCMonth()}/${new Date(Date.now()).getDate()}, ${new Date(
+  Date.now()
+).getHours()}:${new Date(Date.now()).getMinutes()}`;
+
+// Movements Date
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -257,18 +281,125 @@ btnSort.addEventListener('click', function (e) {
 // Number are stored in base2
 
 // Weird behaviour
-console.log(0.1 + 0.2);
-console.log(0.1 + 0.2 === 0.3);
+// console.log(0.1 + 0.2);
+// console.log(0.1 + 0.2 === 0.3);
 
-// Converion: BTS type coerstion
-console.log(Number('2'));
-console.log(+'2');
+// // Converion: BTS type coerstion
+// console.log(Number('2'));
+// console.log(+'2');
 
-// Parsing Number.parseInt(string[extract num], radix[base n])
-console.log(Number.parseInt('30px', 10)); // 30
+// // Parsing Number.parseInt(string[extract num], radix[base n])
+// console.log(Number.parseInt('30px', 10)); // 30
 
-console.log(Number.parseInt('e32', 10)); // NaN must lead with a number
+// console.log(Number.parseInt('e32', 10)); // NaN must lead with a number
 
-console.log(Number.parseFloat('2.5rem', 10)); // 2.5
+// console.log(Number.parseFloat('2.5rem', 10)); // 2.5
 
-console.log(Number.isNaN('swag'));
+// console.log(Number.isNaN('swag')); // USE TO CHECK IF VALUE IS NAN
+
+// console.log(Number.isFinite(23 / 0)); // USE TO FIND IF ANY VAL IS A NUMBER
+
+/////////////////////////////////////////////////
+// Rounding Numbers
+
+// console.log(Math.sqrt(4));
+
+// console.log(Math.max(2, 54, 7, 8, 4, 332));
+// console.log(Math.min(2, 54, 7, 8, 4, 332));
+
+// console.log(Math.PI);
+
+// console.log(Math.trunc(Math.random() * 6) + 1);
+
+// console.log(Math.floor(2.56)); // Round Down
+// console.log(Math.floor(-2.56)); // Round Down
+
+// console.log(Math.ceil(24.1)); // Round Up
+// console.log(Math.ceil(-24.1)); // Round Up
+
+// console.log(Math.round(24.55)); // Round to the nearest int
+
+// // Rounding Decimals
+// console.log((2.7).toFixed(0));
+// console.log((2.7).toFixed(3));
+// console.log((2.345).toFixed(2));
+// console.log((23.4).toFixed(12));
+
+///////////////////////////////
+// Remainder Operator
+
+// console.log(5 % 2); // 1
+// console.log(32 % 2 === 0 ? 'even' : 'odd');
+// console.log(213455 % 10); // Gives the last first right side digit of a number
+
+// ////////////////////////////////////////
+// // Numeric Seperators
+
+// const diameter = 287_250_000_000;
+// console.log(diameter); // 287250000000
+
+// const PI = 3.14_15;
+// console.log(PI); // 3.1415
+
+// ////////////////////////////
+// // BigInt
+
+// // Js numbers are represented by 2^64 but actually only 53 bits are used for the actual numbers so:
+// console.log(2 ** 53 - 1); //9007199254740991
+// console.log(Number.MAX_SAFE_INTEGER); //9007199254740991
+
+// //BIG INT is NUMn
+// console.log(4363245724845374857123946n); // 4363245724845374857123946n
+// console.log(BigInt(342385742524523)); // 342385742524523n
+// console.log(10000n + 10000n); // 20000n
+
+// // bigint and regular Numbers don't mix
+
+// console.log(20n > 15);
+// console.log(20n === 20);
+// console.log(typeof 20n);
+// console.log(20n == '20');
+
+// // Divs
+
+// console.log(11n / 3n); // 3n cuts the decimal parts
+// console.log(11 / 3); // 3.6666666666666665
+
+///////////////////////////////
+// Dates and times
+
+// Create a date there are 4 ways
+
+// const now = new Date();
+// console.log(now); // Thu Aug 07 2025 18:52:19 GMT+0300 (GMT+03:00)
+
+// console.log(new Date('Thu Aug 07 2025 18:51:12')); // Thu Aug 07 2025 18:51:12 GMT+0300 (GMT+03:00)
+
+// console.log(new Date('December 24, 2014')); //Wed Dec 24 2014 00:00:00 GMT+0200 (GMT+03:00)
+
+// console.log(new Date(account1.movementsDates[0])); // Tue Nov 19 2019 00:31:17 GMT+0300 (GMT+03:00)
+
+// console.log(new Date(2043, 10, 34)); //Tue Dec 04 2043 00:00:00 GMT+0300 (GMT+03:00) Auto corrects for Dec 4
+
+// console.log(new Date(0)); // Thu Jan 01 1970 02:00:00 GMT+0200 (GMT+03:00)
+
+// // Working With Dates
+
+// const future = new Date(2043, 10, 34, 12, 43, 58);
+// console.log(future);
+// console.log(future.getFullYear()); // 2043
+// console.log(future.getMonth()); // 11
+// console.log(future.getDate()); // 4
+// console.log(future.getDay()); // 5
+// console.log(future.getHours()); // 12
+// console.log(future.getMinutes()); // 43
+// console.log(future.getSeconds()); // 58
+// // Timestamp = miliseconds passed since Jan 1970
+// console.log(future.getTime()); // 2332835038000
+// console.log(new Date(2332835038000)); // Fri Dec 04 2043 12:43:58 GMT+0300 (GMT+03:00)
+
+// console.log(Date.now()); // Timestamp of now\
+// future.setFullYear(2040);
+// console.log(future); // Tue Dec 04 2040 12:43:58 GMT+0300 (GMT+03:00)
+
+// console.log(new Date('2019-11-18T21:31:17.178Z').getFullYear());

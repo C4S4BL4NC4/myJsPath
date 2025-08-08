@@ -203,18 +203,31 @@ const updateUI = function (acc) {
 };
 
 const startLogoutTimer = function () {
-  // Set Time of 5m
-  let time = 10;
-  // Call the time every second
-  const timeCaller = setInterval(function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(Math.trunc(time % 60)).padStart(2, 0);
+
     // Print remaining time to UI
-    labelTimer.textContent = --time;
+    labelTimer.textContent = `${min}:${sec}`;
     // When time expires  at 0 stop and logout usr
-  }, 1000);
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+
+    time--;
+  };
+  // Set Time of 5m
+  let time = 120;
+  tick();
+  // Call the time every second
+  const timer = setInterval(tick, 1000);
+  return timer;
 };
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // Expermenting API Internat
 
@@ -255,6 +268,9 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -281,6 +297,10 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movementsDates.push(Date.now());
     // Update UI
     updateUI(currentAccount);
+
+    // reset timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 

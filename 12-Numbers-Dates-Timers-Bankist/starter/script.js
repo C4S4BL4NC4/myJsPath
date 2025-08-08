@@ -202,6 +202,16 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogoutTimer = function () {
+  // Set Time of 5m
+  let time = 10;
+  // Call the time every second
+  const timeCaller = setInterval(function () {
+    // Print remaining time to UI
+    labelTimer.textContent = --time;
+    // When time expires  at 0 stop and logout usr
+  }, 1000);
+};
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
@@ -280,14 +290,16 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // ADDED ADDED ADDED ADDED
-    currentAccount.movementsDates.push(Date.now());
+      // ADDED ADDED ADDED ADDED
+      currentAccount.movementsDates.push(Date.now());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 3000);
   }
   inputLoanAmount.value = '';
 });
@@ -485,3 +497,26 @@ btnSort.addEventListener('click', function (e) {
 // console.log('US: ', new Intl.NumberFormat('en-US', options).format(num)); // US:  38,884,764.23 mph
 // console.log('SY: ', new Intl.NumberFormat('ar-SY', options).format(num)); // SY:  ٣٨٬٨٨٤٬٧٦٤٫٢٣ ميل/س
 // console.log('GR: ', new Intl.NumberFormat('de-DE', options).format(num)); // GR:  38.884.764,23 mi/h
+
+////////////////////////////////////////
+// Timers
+// const herbs = ['cinamonn', 'mint', 'skibidi'];
+
+// const teaTime = setTimeout(
+//   (herb1, herb2) =>
+//     console.log(`Here's the mfkin tea with ${herb1} and ${herb2}`),
+//   3000,
+//   ...herbs
+// ); // Here's the mfkin tea with cinamonn and mint
+
+// if (herbs.includes('skibidi')) {
+//   console.log('SKIBIDI TEA DETECTED!!!!!');
+//   clearTimeout(teaTime);
+// }
+// Timer will cancel and bacuse contidion evaluates cleartimout
+/////////////////////////////////////////
+// // Set Interval
+// setInterval(function () {
+//   const now = new Date();
+//   console.log(now);
+// }, 1000);

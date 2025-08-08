@@ -81,29 +81,29 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const combinedMovsDates = acc.movements.map((mov, i) => ({
+    movement: mov,
+    movementDate: acc.movementsDates.at(i),
+  }));
 
-  movs.forEach(function (mov, i) {
-    const type = mov > 0 ? 'deposit' : 'withdrawal';
+  if (sort) combinedMovsDates.sort((a, b) => a.movement - b.movement);
 
-    // Implemented Date Per Transaction
+  combinedMovsDates.forEach(function (obj, i) {
+    const { movement, movementDate } = obj;
+    const type = movement > 0 ? 'deposit' : 'withdrawal';
+
+    const date = new Date(movementDate);
 
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-    <div class="movements__date">${new Date(
-      currentAccount.movementsDates[i]
-    ).getDate()}/${new Date(
-      currentAccount.movementsDates[i]
-    ).getMonth()}/${new Date(
-      currentAccount.movementsDates[i]
-    ).getFullYear()}</div>
-        <div class="movements__value">${mov.toFixed(2)}€</div>
+        <div class="movements__date">${date.getDate()}/${date.getMonth()}/${date.getFullYear()}</div>
+        <div class="movements__value">${movement.toFixed(2)}€</div>
       </div>
     `;
 
@@ -151,7 +151,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -257,7 +257,7 @@ btnClose.addEventListener('click', function (e) {
 let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
 
   sorted = !sorted;
 });

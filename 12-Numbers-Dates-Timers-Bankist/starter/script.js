@@ -81,6 +81,13 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
+const formatCur = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(value);
+};
+
 const formatMovementDate = function (date) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
@@ -122,7 +129,11 @@ const displayMovements = function (acc, sort = false) {
       i + 1
     } ${type}</div>
         <div class="movements__date">${displayDate}</div>
-        <div class="movements__value">${movement.toFixed(2)}€</div>
+        <div class="movements__value">${formatCur(
+          movement,
+          acc.locale,
+          acc.currency
+        )}</div>
       </div>
     `;
 
@@ -132,19 +143,27 @@ const displayMovements = function (acc, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
+  labelBalance.textContent = `${formatCur(
+    acc.balance,
+    acc.locale,
+    acc.currency
+  )}`;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  labelSumIn.textContent = `${formatCur(incomes, acc.locale, acc.currency)}`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
+  labelSumOut.textContent = `${formatCur(
+    Math.abs(out),
+    acc.locale,
+    acc.currency
+  )}`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -154,7 +173,11 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+  labelSumInterest.textContent = `${formatCur(
+    interest,
+    acc.locale,
+    acc.currency
+  )}`;
 };
 
 const createUsernames = function (accs) {
@@ -448,3 +471,17 @@ btnSort.addEventListener('click', function (e) {
 
 //////////////////////////////////////
 // Internationalization: (formating dates and numbers)
+
+//////////////////////////////
+// Inter Numbers
+
+// const num = 38884764.23;
+// const options = {
+//   style: 'unit', // percent
+//   unit: 'mile-per-hour', // Celsius
+//   currency: 'EUR',
+//   useGrouping: false,
+// };
+// console.log('US: ', new Intl.NumberFormat('en-US', options).format(num)); // US:  38,884,764.23 mph
+// console.log('SY: ', new Intl.NumberFormat('ar-SY', options).format(num)); // SY:  ٣٨٬٨٨٤٬٧٦٤٫٢٣ ميل/س
+// console.log('GR: ', new Intl.NumberFormat('de-DE', options).format(num)); // GR:  38.884.764,23 mi/h

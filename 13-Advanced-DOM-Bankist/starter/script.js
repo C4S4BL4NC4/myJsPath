@@ -90,3 +90,64 @@ document
     // message.remove();
     message.parentElement.removeChild(message);
   });
+
+// Styles, attributes and classes
+
+// Styles
+
+// To set a style on element (inline styles)
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+console.log(message.style.height); // Doesn't return anything because its not an inline style.
+
+console.log(message.style.backgroundColor); // rgb(55, 56, 61) set above as an inline style
+
+// To get a style inline or not
+console.log(getComputedStyle(message).height); // 171px (fun fact I get 0px because some cookie addon is removing the bar completely. Regardless, I get a result in some other browsers that has no addons)
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px';
+
+// CSS variables/property
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// Attributes
+
+const logo = document.querySelector('.nav__logo');
+// Standard Attributes
+console.log(logo.alt); // Bankist logo
+console.log(logo.src); // Absolute Path
+console.log(logo.className);
+// Custom attributes are not added automatically because they are not standard properties
+
+// Non-standard
+console.log(logo.designer); // undefined
+
+console.log(logo.getAttribute('designer')); // Jonas
+
+// Set attribs
+
+logo.alt = 'Swag like ohio';
+console.log(logo.designer);
+
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.getAttribute('src')); // Relative path
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href); // Absulote Path
+console.log(link.getAttribute('href')); // Relative Path
+
+// // Data Attributes (has to start with data in the HTML)
+
+// console.log(logo.dataset.versionNumber); // 3
+
+// // Classes
+// logo.classList.add('c', 'j');
+// logo.classList.remove('c', 'j');
+// logo.classList.toggle('c', 'j');
+// logo.classList.contains('c', 'j');
+
+// // Don't use because it will overwrite the entire class
+// // logo.className = 'Jonas';

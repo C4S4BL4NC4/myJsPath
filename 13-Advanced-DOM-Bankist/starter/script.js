@@ -8,6 +8,8 @@ const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const header = document.querySelector('.header');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -34,47 +36,85 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+btnScrollTo.addEventListener('click', function (e) {
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+//
 //////////////////////////////////
 //
+//
+// --------Page Navigation--------
 
-console.log(document.documentElement);
-console.log(document.head);
-console.log(document.body);
+// Inefficient
 
-// Selecting elements:
+/*
+document.querySelectorAll('.nav__link').forEach(function (elm) {
+  elm.addEventListener('click', function (e) {
+    e.preventDefault();
+    const id = this.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+*/
 
-const allSections = document.querySelectorAll('.section');
-console.log(allSections);
+// Efficient (Event Delegation)
+// 1. addEventListner to comomon parent element i.e nav__links
+// 2. Determine what element originated the event
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log(e.target);
 
-document.getElementById('section--1');
-const allButtons = document.getElementsByTagName('button');
-console.log(allButtons); // Returns an HTML collection (changes dynamically)
+  // Matching Strategy
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
+});
 
-console.log(document.getElementsByClassName('btn')); // also returns html collection
+//
+//
+//
+//////////////////////////////////
+
+// console.log(document.documentElement);
+// console.log(document.head);
+// console.log(document.body);
+
+// // Selecting elements:
+
+// const allSections = document.querySelectorAll('.section');
+// console.log(allSections);
+
+// document.getElementById('section--1');
+// const allButtons = document.getElementsByTagName('button');
+// console.log(allButtons); // Returns an HTML collection (changes dynamically)
+
+// console.log(document.getElementsByClassName('btn')); // also returns html collection
 
 // Creating and inserting elements
 
 // .insertAdjacentHTML ** TO ADD ELEMENTS VERY USEFUL
 
-const message = document.createElement('div'); // This is not in the page its a dom element to be inserted into the page.
+// const message = document.createElement('div'); // This is not in the page its a dom element to be inserted into the page.
 
 // its like when we queryselect its from (page -> code). when createElement (code -> page)
 
 // To add a class
-message.classList.add('cookie-message');
+// message.classList.add('cookie-message');
 
 // To Change text of element
 // message.textContent = 'We use cookies for improved functionality and analytics';
 
 // To insert HTML
-message.innerHTML =
-  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie"> Got it </button>';
+/* message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie"> Got it </button>'; 
+  */
 
 // Append on top as a first child
 //header.prepend(message);
 
 // Append as a last child
-header.prepend(message);
+// header.prepend(message);
 //header.append(message.cloneNode(true));
 
 // We can use append and prepend to move elements
@@ -84,107 +124,107 @@ header.prepend(message);
 //header.after(message); // insert after header elm
 
 // To Delete Elements
-document
-  .querySelector('.btn--close-cookie')
-  .addEventListener('click', function () {
-    // message.remove();
-    message.parentElement.removeChild(message);
-  });
+// document
+//   .querySelector('.btn--close-cookie')
+//   .addEventListener('click', function () {
+//     // message.remove();
+//     message.parentElement.removeChild(message);
+//   });
 
-// Styles, attributes and classes
+// // Styles, attributes and classes
 
-// Styles
+// // Styles
 
-// To set a style on element (inline styles)
-message.style.backgroundColor = '#37383d';
-message.style.width = '120%';
+// // To set a style on element (inline styles)
+// message.style.backgroundColor = '#37383d';
+// message.style.width = '120%';
 
-console.log(message.style.height); // Doesn't return anything because its not an inline style.
+// console.log(message.style.height); // Doesn't return anything because its not an inline style.
 
-console.log(message.style.backgroundColor); // rgb(55, 56, 61) set above as an inline style
+// console.log(message.style.backgroundColor); // rgb(55, 56, 61) set above as an inline style
 
-// To get a style inline or not
-console.log(getComputedStyle(message).height); // 171px (fun fact I get 0px because some cookie addon is removing the bar completely. Regardless, I get a result in some other browsers that has no addons)
+// // To get a style inline or not
+// console.log(getComputedStyle(message).height); // 171px (fun fact I get 0px because some cookie addon is removing the bar completely. Regardless, I get a result in some other browsers that has no addons)
 
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px';
+// message.style.height =
+//   Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px';
 
-// CSS variables/property
-// document.documentElement.style.setProperty('--color-primary', 'orangered');
+// // CSS variables/property
+// // document.documentElement.style.setProperty('--color-primary', 'orangered');
 
-// Attributes
+// // Attributes
 
-const logo = document.querySelector('.nav__logo');
-// Standard Attributes
-console.log(logo.alt); // Bankist logo
-console.log(logo.src); // Absolute Path
-console.log(logo.className);
-// Custom attributes are not added automatically because they are not standard properties
+// const logo = document.querySelector('.nav__logo');
+// // Standard Attributes
+// console.log(logo.alt); // Bankist logo
+// console.log(logo.src); // Absolute Path
+// console.log(logo.className);
+// // Custom attributes are not added automatically because they are not standard properties
 
-// Non-standard
-console.log(logo.designer); // undefined
+// // Non-standard
+// console.log(logo.designer); // undefined
 
-console.log(logo.getAttribute('designer')); // Jonas
+// console.log(logo.getAttribute('designer')); // Jonas
 
-// Set attribs
+// // Set attribs
 
-logo.alt = 'Swag like ohio';
-console.log(logo.designer);
+// logo.alt = 'Swag like ohio';
+// console.log(logo.designer);
 
-logo.setAttribute('company', 'Bankist');
+// logo.setAttribute('company', 'Bankist');
 
-console.log(logo.getAttribute('src')); // Relative path
+// console.log(logo.getAttribute('src')); // Relative path
 
-const link = document.querySelector('.nav__link--btn');
-console.log(link.href); // Absulote Path
-console.log(link.getAttribute('href')); // Relative Path
+// const link = document.querySelector('.nav__link--btn');
+// console.log(link.href); // Absulote Path
+// console.log(link.getAttribute('href')); // Relative Path
 
-// // Data Attributes (has to start with data in the HTML)
+// // // Data Attributes (has to start with data in the HTML)
 
-// console.log(logo.dataset.versionNumber); // 3
+// // console.log(logo.dataset.versionNumber); // 3
 
-// // Classes
-// logo.classList.add('c', 'j');
-// logo.classList.remove('c', 'j');
-// logo.classList.toggle('c', 'j');
-// logo.classList.contains('c', 'j');
+// // // Classes
+// // logo.classList.add('c', 'j');
+// // logo.classList.remove('c', 'j');
+// // logo.classList.toggle('c', 'j');
+// // logo.classList.contains('c', 'j');
 
-// // Don't use because it will overwrite the entire class
-// // logo.className = 'Jonas';
+// // // Don't use because it will overwrite the entire class
+// // // logo.className = 'Jonas';
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
+// const btnScrollTo = document.querySelector('.btn--scroll-to');
 
-const section1 = document.querySelector('#section--1');
+// const section1 = document.querySelector('#section--1');
 
-btnScrollTo.addEventListener('click', function (e) {
-  const s1coords = section1.getBoundingClientRect();
+//btnScrollTo.addEventListener('click', function (e) {
+// const s1coords = section1.getBoundingClientRect();
 
-  console.log(s1coords);
-  // console.log(e.target.getBoundingClientRect());
-  console.log(
-    `Window Current XY Scroll offsets: ${window.pageXOffset} / ${window.pageYOffset}`
-  );
-  console.log(
-    `Client height/width viewport: ${document.documentElement.clientHeight} ${document.documentElement.clientWidth}`
-  );
+// console.log(s1coords);
+// // console.log(e.target.getBoundingClientRect());
+// console.log(
+//   `Window Current XY Scroll offsets: ${window.pageXOffset} / ${window.pageYOffset}`
+// );
+// console.log(
+//   `Client height/width viewport: ${document.documentElement.clientHeight} ${document.documentElement.clientWidth}`
+// );
 
-  // Scrolling
+// Scrolling
 
-  // window.scrollTo(
-  //   s1coords.left + window.pageXOffset,
-  //   s1coords.top + window.pageYOffset
-  // )
+// window.scrollTo(
+//   s1coords.left + window.pageXOffset,
+//   s1coords.top + window.pageYOffset
+// )
 
-  // window.scrollTo({
-  //   left: s1coords.left + window.pageXOffset,
-  //   top: s1coords.top + window.pageYOffset,
-  //   behavior: 'smooth',
-  // });
+// window.scrollTo({
+//   left: s1coords.left + window.pageXOffset,
+//   top: s1coords.top + window.pageYOffset,
+//   behavior: 'smooth',
+// });
 
-  // Newschool to do it
+// Newschool to do it
 
-  section1.scrollIntoView({ behavior: 'smooth' });
-});
+// section1.scrollIntoView({ behavior: 'smooth' });
+//});
 
 // Events: An event is a signal generated by a DOMNode
 

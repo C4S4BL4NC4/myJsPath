@@ -39,7 +39,7 @@ document.addEventListener('keydown', function (e) {
 btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
-////
+// Test Commit
 //////////////////////////////////
 //
 //
@@ -271,3 +271,4 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // Capture Phase Listening: Event handlers only listen to events in bubble phase (Default Behaviour) To listen to events in capture phase we need a third parameter in addEventListner('click', function(e){}, ture) true = use capture Traveling order revrses from top to bottom because its in capture phase top-down, unlike bubbling down-up.
 
 // Event Delegation
+// Test2

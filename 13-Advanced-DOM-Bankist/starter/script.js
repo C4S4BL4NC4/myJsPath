@@ -355,3 +355,28 @@ const handleHover = function (e) {
 nav.addEventListener('mouseover', handleHover.bind(0.5)); // mouseover X mouseout (bubbles)
 
 nav.addEventListener('mouseout', handleHover.bind(1)); // mouseover X mouseout (bubbles)
+
+// Implementing sticky navbar
+// const initialCoords = section1.getBoundingClientRect();
+
+// window.addEventListener('scroll', function (e) {
+//   if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// }); // Ineffcient should be avoided but use only this time
+
+// Sticky Nav: Intersection Observer API
+
+const obsCallback = function (entries, observer) {
+  entries.forEach(entry => {
+    console.log(entry);
+  });
+}; // Whenever target "section1" is intersecting %10 (threshold: 0.1) of viewport (root: null) function get called no matter of scrolling up or down.
+
+const obsOptions = {
+  root: null, // element or null for entire viewport
+  threshold: 0.1, // can be array of entries
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+
+observer.observe(section1);

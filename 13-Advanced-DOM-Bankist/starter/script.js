@@ -372,11 +372,54 @@ const obsCallback = function (entries, observer) {
   });
 }; // Whenever target "section1" is intersecting %10 (threshold: 0.1) of viewport (root: null) function get called no matter of scrolling up or down.
 
-const obsOptions = {
-  root: null, // element or null for entire viewport
-  threshold: 0.1, // can be array of entries
+// const obsOptions = {
+//   root: null, // element or null for entire viewport
+//   threshold: [0, 0.2], // can be array of entries
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+
+// observer.observe(section1);
+
+const headr = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entr) {
+  const [entry] = entr;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
 };
 
-const observer = new IntersectionObserver(obsCallback, obsOptions);
+const headrObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
 
-observer.observe(section1);
+headrObserver.observe(headr);
+
+// Reveal sections
+
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.remove('section--hidden');
+
+    // Unobserve
+    observer.unobserve(entry.target);
+  });
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+
+// Lazy loading img

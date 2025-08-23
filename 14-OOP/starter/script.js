@@ -51,3 +51,5 @@ console.log(jonas.hasOwnProperty('species')); // false
 console.log(jonas.__proto__.hasOwnProperty('species')); // true
 console.log(Person.hasOwnProperty('species')); // false
 console.log(Person.prototype.hasOwnProperty('species')); //true. For the class itself use .prototype and for an instance use .__proto__
+
+//

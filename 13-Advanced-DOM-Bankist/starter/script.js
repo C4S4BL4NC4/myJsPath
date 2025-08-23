@@ -423,3 +423,30 @@ allSections.forEach(function (section) {
 });
 
 // Lazy loading img
+
+// To select image with data tag
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  // change src -> data-src
+  entry.target.src = entry.target.dataset.src;
+  // entry.target.classList.remove('lazy-img');
+  // Shouldn't remove through classlist because some people might have slow internet thus reducing the img quality.
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+  // Instead listen for the load event and only then load the image for better resaults for everybody.
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px', // To preload
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));

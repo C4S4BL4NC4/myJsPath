@@ -474,5 +474,51 @@ GOOD LUCK 😀
 // jay.init('Jay', 1999, 'Computer Science');
 // jay.introduce();
 
-// Jay -> Student.__proto__ -> Person.__proto__
-//        Student.__proto__ -> Person.__proto__
+// Jay.__proto__ -> Student.__proto__ -> Person.__proto__
+//                  Student.__proto__ -> Person.__proto__
+
+// Another Class Example
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${this.owner}.`);
+  }
+
+  deposit(val) {
+    this.movements.push(val);
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved`);
+    }
+  }
+}
+
+const acc1 = new Account('Jonas', 'USD', 1111);
+
+// acc1.movements.push(240); //  Avoid
+// acc1.movements.push(-120); // Avoid
+// Avoid directly manipulating the property. instead use methods within the class that manipulates it.
+
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+console.log(acc1);
+
+// Encapsulation: Private Class Fields and Methods

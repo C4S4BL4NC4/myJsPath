@@ -119,3 +119,164 @@ bmw.accelerate();
 bmw.brake();
 bmw.brake();
 */
+
+// ES6 Classes: Nicer and modern syntax
+
+// Class Expression
+// const Cars = class {};
+
+// Class Declaration
+
+/*
+
+class Person {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+  calcAge() {
+    console.log(2025 - this.birthYear);
+  }
+
+  get age() {
+    return 2025 - this.birthYear;
+  }
+
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(' ')) {
+      this._fullName = name; // Convention
+    } else {
+      alert(`${name} is not a full name!`);
+    }
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+}
+
+const jessica = new Person('Jessica Davis', 2000);
+
+console.log(jessica);
+
+const walter = new Person('Walter White', 1959);
+console.log(walter);
+
+*/
+
+// 1. Classes are NOT hoisted (can't be used before declaration).
+// 2. Classes are first-class citizens (Pass them and return them from and to function (They are functions BTS)).
+// 3. Classes are executed in strict mode.
+
+// Constuctor functions and ES6 classes are a matter of personal preference. Also they hide the true nature of the prototype and protoypal inheritance.
+
+/*
+// Setters and Getters
+const account = {
+  owner: 'jonas',
+  movements: [200, 400, -100],
+
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+console.log(account.latest); // As a getter (calling it as a property (not a method))
+account.latest = 50; // Setter
+console.log(account.latest);
+
+*/
+
+// Static Methods are methods that are part of the constructor not the instances of a class ex Number.parseFloat() not 1.parseFloat()
+/*
+class Car {
+  constructor(make, year) {
+    this.make = make;
+    this.year = year;
+  }
+  static country() {
+    console.log('Japan');
+    console.log(this);
+  }
+}
+
+const honda = new Car('Honda', 1996);
+
+// honda.country(); // Error
+Car.country(); // Japan
+
+*/
+
+// Object.create
+/*
+const PersonProto = {
+  calcAge() {
+    console.log(2025 - this.birthYear);
+  },
+
+  init(name, birthYear) {
+    this.name = name;
+    this.birthYear = birthYear;
+  },
+};
+
+const steve = Object.create(PersonProto);
+steve.name = 'Steve';
+steve.birthYear = 2011;
+steve.calcAge();
+
+const sofi = Object.create(PersonProto);
+sofi.init('Sofi', 1997);
+sofi.calcAge();
+
+*/
+
+///////////////////////////////////////
+// Coding Challenge #2
+
+/* 
+1. Re-create challenge 1, but this time using an ES6 class;
+2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
+3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing the value, by multiplying the input by 1.6);
+4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
+
+DATA CAR 1: 'Ford' going at 120 km/h
+
+GOOD LUCK 😀
+*/
+
+class Car {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    return console.log(`${this.make} increased to ${this.speed}`);
+  }
+
+  brake() {
+    this.speed -= 5;
+    return console.log(`${this.make} decreased to ${this.speed}`);
+  }
+
+  get speedUS() {
+    return;
+  }
+}
+
+const bmw = new Car('BMW', 120);
+const mercedes = new Car('Mercedes', 95);
+
+bmw.brake();
+bmw.accelerate();
+bmw.accelerate();
+bmw.accelerate();
+bmw.accelerate();
+bmw.brake();

@@ -479,46 +479,96 @@ GOOD LUCK 😀
 
 // Another Class Example
 
-class Account {
-  constructor(owner, currency, pin) {
-    this.owner = owner;
-    this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
-    this.locale = navigator.language;
+// class Account {
+//   // Declaring a public field = declaring this.locale = nav.lang in constructor.
+//   locale = navigator.language;
+//   bank = 'Bankist';
 
-    console.log(`Thanks for opening an account, ${this.owner}.`);
-  }
+//   // Declaring a private field using #
+//   #movements = []; // <-- Protected #smthin
+//   #pin;
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this.#pin = pin; // <-- Setting #pin
+//     // this.movements = [];
+//     // this.locale = navigator.language;
 
-  deposit(val) {
-    this.movements.push(val);
-  }
+//     console.log(`Thanks for opening an account, ${this.owner}.`);
+//   }
 
-  withdraw(val) {
-    this.deposit(-val);
-  }
+//   // Public Methods (API)
 
-  approveLoan(val) {
-    return true;
-  }
+//   getMovements() {
+//     return this.#movements;
+//   }
 
-  requestLoan(val) {
-    if (this.approveLoan(val)) {
-      this.deposit(val);
-      console.log(`Loan approved`);
-    }
-  }
-}
+//   deposit(val) {
+//     this.#movements.push(val);
+//     return this;
+//   }
 
-const acc1 = new Account('Jonas', 'USD', 1111);
+//   withdraw(val) {
+//     this.deposit(-val);
+//     return this;
+//   }
 
-// acc1.movements.push(240); //  Avoid
-// acc1.movements.push(-120); // Avoid
-// Avoid directly manipulating the property. instead use methods within the class that manipulates it.
+//   // Private Methods also with #
 
-acc1.deposit(250);
-acc1.withdraw(140);
-acc1.requestLoan(1000);
-console.log(acc1);
+//   #approveLoan(val) {
+//     return true;
+//   }
 
-// Encapsulation: Private Class Fields and Methods
+//   requestLoan(val) {
+//     if (this.#approveLoan(val)) {
+//       this.deposit(val);
+//       console.log(`Loan approved`);
+//       return this;
+//     }
+//   }
+
+//   // Private (Static = only usable at the class itself not on an instance of a class).
+
+//   static #test() {
+//     return true;
+//   }
+// }
+
+// const acc1 = new Account('Jonas', 'USD', 1111);
+
+// // acc1.movements.push(240); //  Avoid
+// // acc1.movements.push(-120); // Avoid
+// // Avoid directly manipulating the property. instead use methods within the class that manipulates it.
+
+// acc1.deposit(250);
+// acc1.withdraw(140);
+// acc1.requestLoan(1000);
+// console.log(acc1);
+
+// // Encapsulation: Private Class Fields and Methods
+// // Private class fields are only a part of ES6 way of doing classes
+
+// // 1. Public Fields
+// // 2. Private Fields
+// // 3. Public Methods
+// // 4. Private Methods
+// // STATIC VERSION OF THESE 4
+
+// // Method Chaining (Return account object of each method to be chainable)
+
+// acc1.deposit(300).withdraw(10).withdraw(15).requestLoan(1000).withdraw(100);
+
+// console.log(acc1);
+
+///////////////////////////////////////
+// Coding Challenge #4
+
+/* 
+1. Re-create challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
+2. Make the 'charge' property private;
+3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in the 'CarCl' class. They experiment with chining!
+
+DATA CAR 1: 'Rivian' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/

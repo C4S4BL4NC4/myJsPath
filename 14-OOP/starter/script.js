@@ -572,3 +572,55 @@ DATA CAR 1: 'Rivian' going at 120 km/h, with a charge of 23%
 
 GOOD LUCK 😀
 */
+
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} speed after accelerating ${this.speed}km/h`);
+    return this;
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} speed after braking ${this.speed}km/h`);
+    return this;
+  }
+}
+
+class EVCl extends CarCl {
+  static batteryCapcities = [5000, 6500, 9000, 12000];
+  #charge;
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+
+    console.log(
+      `${this.make}, is crusing at speed of ${this.speed}kmh. At ${
+        this.#charge
+      }% battery charge.`
+    );
+  }
+
+  accelerate() {
+    this.speed += 20;
+    console.log(`${this.make} EV speed after accelerating ${this.speed}`);
+    return this;
+  }
+
+  chargeBattery(val) {
+    console.log(`Battery is charging from ${this.#charge}% to ${val}%.`);
+    this.#charge = val;
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 120, 45);
+
+rivian.accelerate().brake().chargeBattery(80);
+
+console.log(EVCl.batteryCapcities);

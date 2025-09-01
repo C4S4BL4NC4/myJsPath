@@ -11,7 +11,6 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
-
   constructor(coords, distance, duration) {
     this.coords = coords;
     this.distance = distance; // km
@@ -60,11 +59,18 @@ class App {
   #map;
   #mapEvent;
   #workouts = [];
+  #mapZoom = 13;
   constructor() {
     this._getPosition();
+
+    this._getLocalStorage();
+
+    // Event handlers
     form.addEventListener('submit', this._newWorkout.bind(this));
 
     inputType.addEventListener('change', this._toggleElevationField);
+
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
   }
 
   _getPosition() {
@@ -84,7 +90,7 @@ class App {
 
     const coords = [latitude, longitude];
 
-    this.#map = L.map('map').setView(coords, 13); // ID in html called map
+    this.#map = L.map('map').setView(coords, this.#mapZoom); // ID in html called map
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
@@ -92,12 +98,25 @@ class App {
     }).addTo(this.#map);
 
     this.#map.on('click', this._showForm.bind(this));
+    this.#workouts.forEach(work => this._renderWorkoutMarker(work));
   }
 
   _showForm(mapE) {
     this.#mapEvent = mapE;
     form.classList.remove('hidden');
     inputDistance.focus(); // Auto selects the distance field (to immediately start typing)
+  }
+
+  _hideForm() {
+    // Empty input fields
+    inputDistance.value =
+      inputDuration.value =
+      inputCadence.value =
+      inputElevation.value =
+        '';
+    form.style.display = 'none';
+    form.classList.add('hidden');
+    setTimeout(() => (form.style.display = 'grid'), 1000);
   }
 
   _toggleElevationField() {
@@ -157,13 +176,9 @@ class App {
     // Render new workout on list
     this._renderWorkout(workout);
     // hide form and clear input fields
-
-    // Clear inputs
-    inputDistance.value =
-      inputDuration.value =
-      inputCadence.value =
-      inputElevation.value =
-        '';
+    this._hideForm();
+    // Set lkocal storage to all workouts
+    this._setLocalStorage();
   }
 
   _renderWorkoutMarker(workout) {
@@ -179,7 +194,9 @@ class App {
           className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent('waffle')
+      .setPopupContent(
+        `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
+      )
       .openPopup();
   }
 
@@ -233,6 +250,42 @@ class App {
 
     form.insertAdjacentHTML('afterend', html);
   }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest('.workout');
+    if (!workoutEl) return;
+
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+    console.log(workoutEl);
+
+    this.#map.setView(workout.coords, this.#mapZoom, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+  }
+
+  _setLocalStorage() {
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('workouts'));
+    if (!data) return;
+
+    this.#workouts = data;
+
+    this.#workouts.forEach(work => this._renderWorkout(work));
+  }
+
+  // Reset callable via console @ app.reset()
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
+  }
 }
 
 const app = new App();
@@ -241,3 +294,34 @@ const app = new App();
 // const cycling1 = new Cycling([21, 44], 2.4, 20, 20);
 
 // console.log(run1, cycling1);
+
+/*
+Aditional COMING!!! features
+
+{
+edit a workout;
+delete workout;
+delete all workouts;
+sort workouts;
+}
+
+{
+More realistic error and confirmation messages;
+}
+
+{
+Ability to position the map to show all workouts [very hard]
+}
+
+{
+draw lines or shapes instead of just points [very hard]
+}
+
+{
+Geocode location from coordinates ("Run in Faro, Portugal") [ only after aysnc section]
+}
+
+{
+Display weather data for workout time and place [only after aysnc JavaScript Section]
+}
+*/

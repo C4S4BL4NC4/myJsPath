@@ -9,7 +9,9 @@ export default class Workout {
   }
 
   #getRandomNumber = (min, max) => {
-    return (Math.random() * (max - min) + min).toFixed(0);
+    let randNum = (Math.random() * (max - min) + min).toFixed(0);
+    randNum = randNum.padStart(3, '0');
+    return randNum;
   };
 
   _setID() {

@@ -101,48 +101,38 @@ export default class App {
 
     const allPositive = (...inputs) => inputs.every(inp => inp > 0);
 
-    // Get Data from form
-
     const type = this.inputType.value;
     const distance = +this.inputDistance.value;
     const duration = +this.inputDuration.value;
     const { lat, lng } = this.#mapEvent.latlng;
     let workout;
 
-    // If workout is running, create running object
     if (type === 'running') {
       const cadence = +this.inputCadence.value;
       if (
         !validInputs(distance, duration, cadence) ||
         !allPositive(distance, duration, cadence)
       )
-        return alert('Input has to be a positive number');
+        return alert('Inputs must be positive numbers.');
 
       workout = new Running([lat, lng], distance, duration, cadence);
     }
 
-    // If workout is Cycling, create cycling object
     if (type === 'cycling') {
       const elevation = +this.inputElevation.value;
       if (
         !validInputs(distance, duration, elevation) ||
         !allPositive(distance, duration)
       )
-        return alert('Inputs has to be a positive number');
+        return alert('Distance and duration must be positive numbers.');
 
       workout = new Cycling([lat, lng], distance, duration, elevation);
-      console.log(workout);
     }
 
-    // Add new object to the workout array
     this.#workouts.push(workout);
-    // Render workout on map as marker
     this._renderWorkoutMarker(workout);
-    // Render new workout on list
     this._renderWorkout(workout);
-    // hide form and clear input fields
     this._hideForm();
-    // Set local storage to all workouts
     this._setLocalStorage();
   }
 

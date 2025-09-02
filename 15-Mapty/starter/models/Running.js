@@ -8,6 +8,7 @@ export default class Running extends Workout {
     this.cadence = cadence;
     this.calcPace();
     this._setDescription();
+    this._setID();
   }
   calcPace() {
     this.pace = this.duration / this.distance;

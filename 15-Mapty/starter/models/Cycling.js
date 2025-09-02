@@ -8,6 +8,7 @@ export default class Cycling extends Workout {
     this.elevation = elevation;
     this.calcSpeed();
     this._setDescription();
+    this._setID();
   }
   calcSpeed() {
     this.speed = this.distance / this.duration;

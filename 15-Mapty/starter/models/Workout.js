@@ -2,11 +2,20 @@
 
 export default class Workout {
   date = new Date();
-  id = (Date.now() + '').slice(-10);
   constructor(coords, distance, duration) {
     this.coords = coords;
     this.distance = distance; // km
     this.duration = duration; // min
+  }
+
+  #getRandomNumber = (min, max) => {
+    return (Math.random() * (max - min) + min).toFixed(0);
+  };
+
+  _setID() {
+    this.id = `${this.#getRandomNumber(0, 999)}${
+      this.type === 'running' ? 'RN' : 'CY'
+    }${(Date.now() + '').slice(-4)}`;
   }
   _setDescription() {
     const months = [

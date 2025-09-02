@@ -19,3 +19,5 @@ const app = new App(
   inputCadence,
   inputElevation
 );
+
+window.app = app;

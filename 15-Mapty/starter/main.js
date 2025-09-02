@@ -9,11 +9,11 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
-const containerWorkoutsButtons = document.querySelectorAll(
-  '.workout__button button'
-);
-const editButton = document.querySelector('.button--edit');
-const deleteButton = document.querySelector('.button--delete');
+const editButton = document.querySelector('.edit--button');
+const deleteButton = document.querySelector('.delete--button');
+const sortButton = document.querySelector('.sort--button');
+const purgeButton = document.querySelector('.purge--button');
+const buttonsContainer = document.querySelector('.button__container');
 
 const app = new App(
   form,
@@ -23,9 +23,11 @@ const app = new App(
   inputDuration,
   inputCadence,
   inputElevation,
-  containerWorkoutsButtons,
   editButton,
-  deleteButton
+  deleteButton,
+  sortButton,
+  purgeButton,
+  buttonsContainer
 );
 
 window.app = app;

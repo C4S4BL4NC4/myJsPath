@@ -6,6 +6,7 @@ export default class App {
   #mapEvent;
   #workouts = [];
   #mapZoom = 13;
+  #selectedWorkout;
 
   constructor(
     form,
@@ -14,7 +15,12 @@ export default class App {
     inputDistance,
     inputDuration,
     inputCadence,
-    inputElevation
+    inputElevation,
+    editButton,
+    deleteButton,
+    sortButton,
+    purgeButton,
+    buttonsContainer
   ) {
     this.form = form;
     this.containerWorkouts = containerWorkouts;
@@ -23,9 +29,11 @@ export default class App {
     this.inputDuration = inputDuration;
     this.inputCadence = inputCadence;
     this.inputElevation = inputElevation;
-    this.containerWorkoutsButtons = containerWorkoutsButtons;
     this.editButton = editButton;
     this.deleteButton = deleteButton;
+    this.sortButton = sortButton;
+    this.purgeButton = purgeButton;
+    this.buttonsContainer = buttonsContainer;
 
     this._getPosition();
     this._getLocalStorage();
@@ -38,13 +46,13 @@ export default class App {
     );
     this.containerWorkouts.addEventListener(
       'click',
-      this._containerWorkoutCallbackBundle.bind(this)
+      this._moveToPopup.bind(this)
     );
-  }
+    this.editButton.addEventListener('click', this._editWorkout.bind(this));
+    this.deleteButton.addEventListener('click', this._deleteWorkout.bind(this));
+    this.sortButton.addEventListener('click', this._sortWorkout.bind(this));
 
-  _containerWorkoutCallbackBundle() {
-    this._moveToPopup.bind(this);
-    this._attachWorkoutButtons.bind(this);
+    this.purgeButton.addEventListener('click', this.reset.bind(this));
   }
 
   _getPosition() {
@@ -216,18 +224,14 @@ export default class App {
 
   _moveToPopup(e) {
     const workout = this._selectWorkout(e);
-    if (!workout) return;
+    if (!workout || !this.#map) return;
     this.#map.setView(workout.coords, this.#mapZoom, {
       animate: true,
       pan: {
         duration: 1,
       },
     });
-  }
-
-  _attachWorkoutButtons(e) {
-    const workout = this._selectWorkout(e);
-    if (!workout) return;
+    this.buttonsContainer.classList.remove('inactive');
   }
 
   _selectWorkout(e) {
@@ -238,7 +242,27 @@ export default class App {
       work => work.id === workoutEl.dataset.id
     );
     console.log(workoutEl);
+    this.#selectedWorkout = workout;
     return workout;
+  }
+
+  _editWorkout() {
+    console.log('edit');
+    const workout = this.#selectedWorkout;
+    if (!workout) return;
+    console.log(workout);
+  }
+  _sortWorkout() {
+    console.log('sort');
+  }
+  _deleteWorkout() {
+    console.log('delete');
+    const element = document.getElementsByClassName('workout');
+
+    console.log(element);
+
+    this.#removeWorkoutById(this.#selectedWorkout.id);
+    this._getLocalStorage();
   }
 
   _setLocalStorage() {
@@ -252,6 +276,14 @@ export default class App {
     this.#workouts = data;
 
     this.#workouts.forEach(work => this._renderWorkout(work));
+  }
+
+  #removeWorkoutById(id) {
+    const workoutHTML = document.querySelector(`li[data-id="${id}"]`);
+    workoutHTML?.remove();
+    const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
+    const updatedWorkouts = workouts.filter(workout => workout.id !== id);
+    localStorage.setItem('workouts', JSON.stringify(updatedWorkouts));
   }
 
   reset() {

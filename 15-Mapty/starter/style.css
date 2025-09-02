@@ -219,15 +219,21 @@ a:visited {
   border-left: 5px solid var(--color-brand--1);
 }
 
-.workout__button {
-  color: #ffffff;
+.button__container {
   display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
   position: relative;
-  right: -270px;
-  gap: 1rem;
-  font-size: 12px;
+  font-size: 13px;
 }
 
-.hidden__button {
+.btn {
+  cursor: pointer;
+  position: static;
+  transform: none;
+}
+
+.inactive {
   opacity: 0;
 }

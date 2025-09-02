@@ -23,6 +23,9 @@ export default class App {
     this.inputDuration = inputDuration;
     this.inputCadence = inputCadence;
     this.inputElevation = inputElevation;
+    this.containerWorkoutsButtons = containerWorkoutsButtons;
+    this.editButton = editButton;
+    this.deleteButton = deleteButton;
 
     this._getPosition();
     this._getLocalStorage();
@@ -35,9 +38,15 @@ export default class App {
     );
     this.containerWorkouts.addEventListener(
       'click',
-      this._moveToPopup.bind(this)
+      this._containerWorkoutCallbackBundle.bind(this)
     );
   }
+
+  _containerWorkoutCallbackBundle() {
+    this._moveToPopup.bind(this);
+    this._attachWorkoutButtons.bind(this);
+  }
+
   _getPosition() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
@@ -214,6 +223,11 @@ export default class App {
         duration: 1,
       },
     });
+  }
+
+  _attachWorkoutButtons(e) {
+    const workout = this._selectWorkout(e);
+    if (!workout) return;
   }
 
   _selectWorkout(e) {

@@ -255,14 +255,19 @@ export default class App {
   _sortWorkout() {
     console.log('sort');
   }
+
   _deleteWorkout() {
     console.log('delete');
     const element = document.getElementsByClassName('workout');
 
     console.log(element);
 
-    this.#removeWorkoutById(this.#selectedWorkout.id);
-    this._getLocalStorage();
+    // Remove HTML workout containers
+    // Remove Marker
+    // Remove workout from storage
+    // Update UI
+
+    this.#selectedWorkout = {};
   }
 
   _setLocalStorage() {
@@ -276,14 +281,6 @@ export default class App {
     this.#workouts = data;
 
     this.#workouts.forEach(work => this._renderWorkout(work));
-  }
-
-  #removeWorkoutById(id) {
-    const workoutHTML = document.querySelector(`li[data-id="${id}"]`);
-    workoutHTML?.remove();
-    const workouts = JSON.parse(localStorage.getItem('workouts')) || [];
-    const updatedWorkouts = workouts.filter(workout => workout.id !== id);
-    localStorage.setItem('workouts', JSON.stringify(updatedWorkouts));
   }
 
   reset() {

@@ -5,6 +5,7 @@ export default class App {
   #map;
   #mapEvent;
   #workouts = [];
+  #markers = [];
   #mapZoom = 13;
   #selectedWorkout;
 
@@ -154,7 +155,7 @@ export default class App {
   }
 
   _renderWorkoutMarker(workout) {
-    L.marker(workout.coords)
+    const marker = L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -169,6 +170,8 @@ export default class App {
         `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
       )
       .openPopup();
+
+    this.#markers.push(marker);
   }
 
   _renderWorkout(workout) {
@@ -242,7 +245,9 @@ export default class App {
       work => work.id === workoutEl.dataset.id
     );
     console.log(workoutEl);
+    console.log(this.#markers);
     this.#selectedWorkout = workout;
+
     return workout;
   }
 
@@ -258,17 +263,28 @@ export default class App {
 
   _deleteWorkout() {
     console.log('delete');
-    const element = document.getElementsByClassName('workout');
-
-    console.log(element);
-
     // Remove HTML workout containers
+    const workoutArr = Array.from(document.getElementsByClassName('workout'));
+    const workoutIndex = workoutArr.findIndex(
+      el => el.dataset.id === this.#selectedWorkout.id
+    );
+    this.#markers.splice(workoutIndex, 1);
+    workoutArr.forEach(el => {
+      if (el.dataset.id === this.#selectedWorkout.id) el.remove();
+    });
+
     // Remove Marker
+
     // Remove workout from storage
+
     // Update UI
 
+    location.reload();
+    // Clear the selected workout variable
     this.#selectedWorkout = {};
   }
+
+  //
 
   _setLocalStorage() {
     localStorage.setItem('workouts', JSON.stringify(this.#workouts));

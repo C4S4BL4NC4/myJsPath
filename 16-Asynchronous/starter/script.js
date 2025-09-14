@@ -162,4 +162,4 @@ const getCountry = function (country) {
     });
 };
 
-getCountry('china');
+getCountry('Turkey');

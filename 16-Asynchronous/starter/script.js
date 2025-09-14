@@ -147,7 +147,7 @@ const renderCountry = function (data, className = '') {
 };
 
 const getCountry = function (country) {
-  fetch(`https://restcountries.com/v2/name/${country}`)
+  fetch(`https://restcountries.com/v2/name/${country.toLowerCase()}`)
     .then(response => response.json())
     .then(data => {
       console.log(data[0]);

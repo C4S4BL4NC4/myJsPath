@@ -318,11 +318,11 @@ GOOD LUCK 😀
 // lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 
 // Promisifying setTimeout
-// const wait = function (seconds) {
-//   return new Promise(function (resolve) {
-//     setTimeout(resolve, seconds * 1000);
-//   });
-// };
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
 
 // wait(1)
 //   .then(() => {
@@ -440,21 +440,32 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 */
 
-const imgEl = document.createElement('img');
-imgEl.src = 'img/img-1.jpg';
+let globEl = '';
 
 const createImage = function (imgPath) {
   return new Promise(function (resolve, reject) {
+    const imgEl = document.createElement('img');
+    imgEl.src = imgPath;
+    imgEl.addEventListener('error', e => reject(e));
     //TODO
-    if (true) {
-      const imgEl = document.createElement('img');
-      imgEl.src = imgPath;
-      resolve(imgPath);
-    } else {
-      reject('Invalid Path.');
-    }
+    imgEl.addEventListener('load', function () {
+      document.body.appendChild(imgEl);
+      resolve(imgEl);
+    });
   });
 };
-// createImage('img/img-1.jpg')
-//   .then(data => console.log(data))
-//   .catch(err => console.error(err));
+createImage('img/img-1.jpg')
+  .then(data => (globEl = data))
+  .catch(err => console.error(err));
+
+wait(2)
+  .then(() => {
+    globEl.style.display = 'none';
+    createImage('img/img-2.jpg').then(data => (globEl = data));
+    return wait(2);
+  })
+  .then(() => {
+    globEl.style.display = 'none';
+    createImage('img/img-3.jpg').then(data => (globEl = data));
+    return wait(2);
+  });

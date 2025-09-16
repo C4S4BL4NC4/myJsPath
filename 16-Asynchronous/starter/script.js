@@ -318,11 +318,11 @@ GOOD LUCK 😀
 // lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
 
 // Promisifying setTimeout
-const wait = function (seconds) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, seconds * 1000);
-  });
-};
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
 
 // wait(1)
 //   .then(() => {
@@ -441,6 +441,12 @@ GOOD LUCK 😀
 */
 
 let globEl = '';
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
 
 const createImage = function (imgPath) {
   return new Promise(function (resolve, reject) {

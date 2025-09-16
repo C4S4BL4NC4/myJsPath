@@ -240,54 +240,221 @@ TEST COORDINATES 2: -33.933, 18.474
 GOOD LUCK 😀
 */
 
-const whereAmI = function (lat, lng) {
-  let country = '';
-  // const request = new XMLHttpRequest();
-  // request.open(
-  //   'GET',
-  //   `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
-  // );
-  // request.send();
+// const whereAmI = function (lat, lng) {
+//   let country = '';
+//   const request = new XMLHttpRequest();
+//   request.open(
+//     'GET',
+//     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+//   );
+//   request.send();
 
-  // request.addEventListener('load', function () {
-  //   const data = JSON.parse(this.responseText);
-  //   console.log(`You are in ${data.city}, ${data.countryName}`);
+//   request.addEventListener('load', function () {
+//     const data = JSON.parse(this.responseText);
+//     console.log(`You are in ${data.city}, ${data.countryName}`);
 
-  //   country = data.countryName;
-  // });
+//     country = data.countryName;
+//   });
 
-  fetch(
-    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
-  )
-    .then(response => {
-      if (!response.ok) throw new Error('Country Not Found 1st API');
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      console.log(`You are in ${data.city}, ${data.countryName}`);
-      return fetch(`https://restcountries.com/v2/alpha/${data.countryCode}`);
-    })
-    .then(response => {
-      if (!response.ok) throw new Error('Country Not Found 2nd API');
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      return renderCountry(data);
-    })
-    .catch(err => {
-      countriesContainer.textContent = '';
-      countriesContainer.insertAdjacentText('beforeend', `💥 ${err} 💥`);
-    })
-    .finally(() => {
-      countriesContainer.style.opacity = 1;
-    });
+//   fetch(
+//     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+//   )
+//     .then(response => {
+//       if (!response.ok) throw new Error('Country Not Found 1st API');
+//       return response.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       console.log(`You are in ${data.city}, ${data.countryName}`);
+//       return fetch(`https://restcountries.com/v2/alpha/${data.countryCode}`);
+//     })
+//     .then(response => {
+//       if (!response.ok) throw new Error('Country Not Found 2nd API');
+//       return response.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       return renderCountry(data);
+//     })
+//     .catch(err => {
+//       countriesContainer.textContent = '';
+//       countriesContainer.insertAdjacentText('beforeend', `💥 ${err} 💥`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
+
+// btn.addEventListener('click', function () {
+//   // whereAmI(52.508, 13.381);
+//   // whereAmI(19.037, 72.873);
+//   // whereAmI(+prompt('lat'), +prompt('lng'));
+//   whereAmI(41.06985265629142, 29.041425918037646);
+// });
+
+// Callback Queue and Microtask Queue
+
+// console.log('Test start'); // 1
+
+// setTimeout(() => console.log('0 Sec Timer'), 0); // 4
+
+// Promise.resolve('Resolved Promise 1').then(res => console.log(res)); // 3
+
+// console.log('Test End'); // 2
+
+// Building Promises
+
+// const lotteryPromise = new Promise(function (resolve, reject) {
+//   console.log('Longfellow...');
+//   setTimeout(function () {
+//     if (Math.random() >= 0.5) {
+//       resolve('You won 🏆️');
+//     } else {
+//       reject(new Error('You lost 💥'));
+//     }
+//   }, 2000);
+// });
+
+// lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// Promisifying setTimeout
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
+
+// wait(1)
+//   .then(() => {
+//     console.log('1 Second Passed.');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('2 Second Passed.');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('3 Second Passed.');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('4 Second Passed.');
+//     return wait(1);
+//   })
+//   .then(() => {
+//     console.log('5 Second Passed.');
+//     return wait(1);
+//   });
+
+// navigator.geolocation.getCurrentPosition(
+//   pos => console.log(pos),
+//   err => console.error(err)
+// );
+
+// // Promisifying Geolocation
+// const getPosition = function () {
+//   return new Promise(function (resolve, reject) {
+//     // navigator.geolocation.getCurrentPosition(
+//     //   pos => resolve(pos),
+//     //   err => reject(err)
+//     // );
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
+
+// const whereAmI = function (lat, lng) {
+//   const request = new XMLHttpRequest();
+//   request.open(
+//     'GET',
+//     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+//   );
+//   request.send();
+
+//   request.addEventListener('load', function () {
+//     const data = JSON.parse(this.responseText);
+//     console.log(`You are in ${data.city}, ${data.countryName}`);
+//   });
+
+//   fetch(
+//     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+//   )
+//     .then(response => {
+//       if (!response.ok) throw new Error('Country Not Found 1st API');
+//       return response.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       console.log(`You are in ${data.city}, ${data.countryName}`);
+//       return fetch(`https://restcountries.com/v2/alpha/${data.countryCode}`);
+//     })
+//     .then(response => {
+//       if (!response.ok) throw new Error('Country Not Found 2nd API');
+//       return response.json();
+//     })
+//     .then(data => {
+//       console.log(data);
+//       return renderCountry(data);
+//     })
+//     .catch(err => {
+//       countriesContainer.textContent = '';
+//       countriesContainer.insertAdjacentText('beforeend', `💥 ${err} 💥`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
+
+// btn.addEventListener('click', function () {
+//   // whereAmI(52.508, 13.381);
+//   // whereAmI(19.037, 72.873);
+//   // whereAmI(+prompt('lat'), +prompt('lng'));
+//   // getPosition().then(data => console.log(data.coords));
+//   whereAmI(
+//     getPosition().then(data => data.coords.latitude),
+//     getPosition().then(data => data.coords.longitude)
+//   );
+// });
+
+///////////////////////////////////////
+// Coding Challenge #2
+
+/* 
+Build the image loading functionality that I just showed you on the screen.
+
+Tasks are not super-descriptive this time, so that you can figure out some stuff on your own. Pretend you're working on your own 😉
+
+PART 1
+1. Create a function 'createImage' which receives imgPath as an input. This function returns a promise which creates a new image (use document.createElement('img')) and sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. The fulfilled value should be the image element itself. In case there is an error loading the image ('error' event), reject the promise.
+
+If this part is too tricky for you, just watch the first part of the solution.
+
+PART 2
+2. Comsume the promise using .then and also add an error handler;
+3. After the image has loaded, pause execution for 2 seconds using the wait function we created earlier;
+4. After the 2 seconds have passed, hide the current image (set display to 'none'), and load a second image (HINT: Use the image element returned by the createImage promise to hide the current image. You will need a global variable for that 😉);
+5. After the second image has loaded, pause execution for 2 seconds again;
+6. After the 2 seconds have passed, hide the current image.
+
+TEST DATA: Images in the img folder. Test the error handler by passing a wrong image path. Set the network speed to 'Fast 3G' in the dev tools Network tab, otherwise images load too fast.
+
+GOOD LUCK 😀
+*/
+
+const imgEl = document.createElement('img');
+imgEl.src = 'img/img-1.jpg';
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    //TODO
+    if (true) {
+      const imgEl = document.createElement('img');
+      imgEl.src = imgPath;
+      resolve(imgPath);
+    } else {
+      reject('Invalid Path.');
+    }
+  });
 };
-
-btn.addEventListener('click', function () {
-  // whereAmI(52.508, 13.381);
-  // whereAmI(19.037, 72.873);
-  whereAmI(+prompt('lat'), +prompt('lng'));
-  // whereAmI(53.43380103712036, -1.6983487876500496);
-});
+// createImage('img/img-1.jpg')
+//   .then(data => console.log(data))
+//   .catch(err => console.error(err));

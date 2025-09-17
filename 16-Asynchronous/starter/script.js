@@ -42,6 +42,13 @@ const getPosition = function () {
   });
 };
 
+const getJSON = function (url, errorMsg = 'Something went wrong!') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} ${response.status}`);
+    return response.json();
+  });
+};
+
 // NEW COUNTRIES API URL (use instead of the URL shown in videos):
 // https://restcountries.com/v2/name/portugal
 
@@ -487,66 +494,111 @@ GOOD LUCK 😀
 //   })
 //   .catch(err => console.error(err));
 
-const whereAmI = async function () {
-  // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
-  //   res.json()
-  // ).then(data => console.log(...data));
-  //SAME THING
+/////
+/////
+/////
+/////
+/////
 
-  // Error Handling
+// const whereAmI = async function () {
+//   // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
+//   //   res.json()
+//   // ).then(data => console.log(...data));
+//   //SAME THING
+
+//   // Error Handling
+//   try {
+//     // geoloc
+//     const pos = await getPosition();
+//     const { latitiude: lat, longitude: lng } = pos.coords;
+
+//     // revGeoLoc
+//     const resGeo = await fetch(
+//       `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+//     );
+//     if (!resGeo.ok) throw new Error('Problem Getting The Geo Location Data');
+
+//     const dataGeo = await resGeo.json();
+//     console.log(dataGeo);
+
+//     // countryData
+//     const res = await fetch(
+//       `https://restcountries.com/v2/name/${dataGeo.countryName}`
+//     );
+//     if (!res.ok) throw new Error('Problem Getting Country Data');
+//     const data = await res.json();
+//     console.log(data[0]);
+//     renderCountry(data[0]);
+
+//     return `You are in ${dataGeo.city}, ${dataGeo.countryName}`;
+//   } catch (err) {
+//     console.error(err);
+//     renderError(`Something went wrong! ${err.message} 💥`);
+
+//     // Reject promise return from async function
+//     throw err;
+//   } finally {
+//     btn.style.opacity = 0;
+//     countriesContainer.style.opacity = 1;
+//   }
+// };
+
+// // Try catch
+
+// // try {
+// //   let y = 1;
+// //   const x = 9;
+// //   x = 3;
+// // } catch (err) {
+// //   console.log(err);
+// // }
+
+// // Using Return values of async/await
+
+// // whereAmI().then(city => console.log(city)); // Using Then OR ->
+
+// // Using an iife
+
+// (async function () {
+//   const city = await whereAmI();
+//   console.log(city);
+// })();
+
+///     ///     ///     ///
+
+///     ///     ///
+
+///     ///
+
+///
+
+// Getting data of 3 countries where order DON'T matter (Parallel Promises)
+
+const get3Countries = async function (c1, c2, c3) {
   try {
-    // geoloc
-    const pos = await getPosition();
-    const { latitiude: lat, longitude: lng } = pos.coords;
+    /*
+    const [dataC1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    const [dataC2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+    const [dataC3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
 
-    // revGeoLoc
-    const resGeo = await fetch(
-      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
-    );
-    if (!resGeo.ok) throw new Error('Problem Getting The Geo Location Data');
+    console.log([dataC1.capital, dataC2.capital, dataC3.capital]);
+    */
 
-    const dataGeo = await resGeo.json();
-    console.log(dataGeo);
+    // Run Parallel Promises
 
-    // countryData
-    const res = await fetch(
-      `https://restcountries.com/v2/name/${dataGeo.countryName}`
-    );
-    if (!res.ok) throw new Error('Problem Getting Country Data');
-    const data = await res.json();
-    console.log(data[0]);
-    renderCountry(data[0]);
+    // Promise.all() receives and returns an Array.
+    // Promise.all() short circuits if a single promise is rejected.
 
-    return `You are in ${dataGeo.city}, ${dataGeo.countryName}`;
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v2/name/${c1}`),
+      getJSON(`https://restcountries.com/v2/name/${c2}`),
+      getJSON(`https://restcountries.com/v2/name/${c3}`),
+    ]);
+
+    console.log(data.map(d => d[0].capital));
   } catch (err) {
     console.error(err);
-    renderError(`Something went wrong! ${err.message} 💥`);
-
-    // Reject promise return from async function
-    throw err;
-  } finally {
-    btn.style.opacity = 0;
-    countriesContainer.style.opacity = 1;
   }
 };
 
-// Try catch
-
-// try {
-//   let y = 1;
-//   const x = 9;
-//   x = 3;
-// } catch (err) {
-//   console.log(err);
-// }
-
-// Using Return values of async/await
-
-// whereAmI().then(city => console.log(city)); // Using Then OR ->
-
-// Using an iife
-
-(async function () {
-  const city = await whereAmI();
-  console.log(city);
-})();
+get3Countries('Hungary', 'Greece', 'Slovakia');

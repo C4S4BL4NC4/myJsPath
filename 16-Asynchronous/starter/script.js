@@ -461,10 +461,10 @@ const createImage = function (imgPath) {
   });
 };
 createImage('img/img-1.jpg')
-  .then(data => (globEl = data))
-  .catch(err => console.error(err));
-
-wait(2)
+  .then(data => {
+    globEl = data;
+    return wait(2);
+  })
   .then(() => {
     globEl.style.display = 'none';
     createImage('img/img-2.jpg').then(data => (globEl = data));
@@ -473,5 +473,5 @@ wait(2)
   .then(() => {
     globEl.style.display = 'none';
     createImage('img/img-3.jpg').then(data => (globEl = data));
-    return wait(2);
-  });
+  })
+  .catch(err => console.error(err));

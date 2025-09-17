@@ -231,6 +231,14 @@ getCountryAndNeighbor('Argentina');
 //   getCountry('serbia');
 // });
 
+///     ///     ///     ///
+
+///     ///     ///
+
+///     ///
+
+///
+
 ///////////////////////////////////////
 // Coding Challenge #1
 
@@ -433,6 +441,14 @@ GOOD LUCK 😀
 //   );
 // });
 
+///     ///     ///     ///
+
+///     ///     ///
+
+///     ///
+
+///
+
 ///////////////////////////////////////
 // Coding Challenge #2
 
@@ -494,11 +510,13 @@ GOOD LUCK 😀
 //   })
 //   .catch(err => console.error(err));
 
-/////
-/////
-/////
-/////
-/////
+///     ///     ///     ///
+
+///     ///     ///
+
+///     ///
+
+///
 
 // const whereAmI = async function () {
 //   // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
@@ -574,31 +592,105 @@ GOOD LUCK 😀
 
 // Getting data of 3 countries where order DON'T matter (Parallel Promises)
 
-const get3Countries = async function (c1, c2, c3) {
-  try {
-    /*
-    const [dataC1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
-    const [dataC2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
-    const [dataC3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+// const get3Countries = async function (c1, c2, c3) {
+//   try {
+//     /*
+//     const [dataC1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+//     const [dataC2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+//     const [dataC3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
 
-    console.log([dataC1.capital, dataC2.capital, dataC3.capital]);
-    */
+//     console.log([dataC1.capital, dataC2.capital, dataC3.capital]);
+//     */
 
-    // Run Parallel Promises
+//     // Run Parallel Promises
 
-    // Promise.all() receives and returns an Array.
-    // Promise.all() short circuits if a single promise is rejected.
+//     // Promise.all() receives and returns an Array.
+//     // Promise.all() short circuits if a single promise is rejected.
 
-    const data = await Promise.all([
-      getJSON(`https://restcountries.com/v2/name/${c1}`),
-      getJSON(`https://restcountries.com/v2/name/${c2}`),
-      getJSON(`https://restcountries.com/v2/name/${c3}`),
-    ]);
+//     const data = await Promise.all([
+//       getJSON(`https://restcountries.com/v2/name/${c1}`),
+//       getJSON(`https://restcountries.com/v2/name/${c2}`),
+//       getJSON(`https://restcountries.com/v2/name/${c3}`),
+//     ]);
 
-    console.log(data.map(d => d[0].capital));
-  } catch (err) {
-    console.error(err);
-  }
-};
+//     console.log(data.map(d => d[0].capital));
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
-get3Countries('Hungary', 'Greece', 'Slovakia');
+// get3Countries('Hungary', 'Greece', 'Slovakia');
+
+// Promise.race receieves array of promisies returns a promise.
+// Promise.race first promise to settled(fulfilled or rejected) wins the race.
+
+// Promise.race
+// (async function () {
+//   const res = await Promise.race([
+//     getJSON(`https://restcountries.com/v2/name/italy`),
+//     getJSON(`https://restcountries.com/v2/name/hungary`),
+//     getJSON(`https://restcountries.com/v2/name/czech`),
+//   ]);
+
+//   console.log(...res);
+// })();
+
+// // Real life example:
+// const timeout = function (ms) {
+//   return new Promise(function (_, reject) {
+//     setTimeout(function () {
+//       reject(new Error('Request took too long'));
+//     }, ms);
+//   });
+// };
+
+// Promise.race([getJSON(`https://restcountries.com/v2/name/italy`), timeout(140)])
+//   .then(res => console.log(res[0]))
+//   .catch(err => console.log(err));
+
+// // Promise.allSettled -> takes an array of promises and returns settled ones(Array)
+
+// Promise.allSettled([
+//   Promise.resolve('Success1'),
+//   Promise.reject('Reject1'),
+//   Promise.resolve('Success2'),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err));
+
+// // Promise.any [ES2021] -> returns the first fulfilled Promise (ignore rejected)
+// Promise.any([
+//   Promise.resolve('Success1'),
+//   Promise.reject('Reject1'),
+//   Promise.resolve('Success2'),
+// ])
+//   .then(res => console.log(res))
+//   .catch(err => console.log(err));
+
+///     ///     ///     ///
+
+///     ///     ///
+
+///     ///
+
+///
+
+///////////////////////////////////////
+// Coding Challenge #3
+
+/* 
+PART 1
+Write an async function 'loadNPause' that recreates Coding Challenge #2, this time using async/await (only the part where the promise is consumed). Compare the two versions, think about the big differences, and see which one you like more.
+Don't forget to test the error handler, and to set the network speed to 'Fast 3G' in the dev tools Network tab.
+
+PART 2
+1. Create an async function 'loadAll' that receives an array of image paths 'imgArr';
+2. Use .map to loop over the array, to load all the images with the 'createImage' function (call the resulting array 'imgs')
+3. Check out the 'imgs' array in the console! Is it like you expected?
+4. Use a promise combinator function to actually get the images from the array 😉
+5. Add the 'paralell' class to all the images (it has some CSS styles).
+
+TEST DATA: ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']. To test, turn off the 'loadNPause' function.
+
+GOOD LUCK 😀
+*/

@@ -31,6 +31,17 @@ const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
 };
 
+// Promisifying Geolocation
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   pos => resolve(pos),
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
 // NEW COUNTRIES API URL (use instead of the URL shown in videos):
 // https://restcountries.com/v2/name/portugal
 
@@ -375,9 +386,9 @@ GOOD LUCK 😀
 //     console.log(`You are in ${data.city}, ${data.countryName}`);
 //   });
 
-//   fetch(
-//     `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
-//   )
+// fetch(
+//   `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+// )
 //     .then(response => {
 //       if (!response.ok) throw new Error('Country Not Found 1st API');
 //       return response.json();
@@ -440,38 +451,102 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 */
 
-let globEl = '';
+// let globEl = '';
 
-const wait = function (seconds) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, seconds * 1000);
-  });
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
+
+// const createImage = function (imgPath) {
+//   return new Promise(function (resolve, reject) {
+//     const imgEl = document.createElement('img');
+//     imgEl.src = imgPath;
+//     imgEl.addEventListener('error', e => reject(e));
+//     //TODO
+//     imgEl.addEventListener('load', function () {
+//       document.body.appendChild(imgEl);
+//       resolve(imgEl);
+//     });
+//   });
+// };
+// createImage('img/img-1.jpg')
+//   .then(data => {
+//     globEl = data;
+//     return wait(2);
+//   })
+//   .then(() => {
+//     globEl.style.display = 'none';
+//     createImage('img/img-2.jpg').then(data => (globEl = data));
+//     return wait(2);
+//   })
+//   .then(() => {
+//     globEl.style.display = 'none';
+//     createImage('img/img-3.jpg').then(data => (globEl = data));
+//   })
+//   .catch(err => console.error(err));
+
+const whereAmI = async function () {
+  // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
+  //   res.json()
+  // ).then(data => console.log(...data));
+  //SAME THING
+
+  // Error Handling
+  try {
+    // geoloc
+    const pos = await getPosition();
+    const { latitiude: lat, longitude: lng } = pos.coords;
+
+    // revGeoLoc
+    const resGeo = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
+    );
+    if (!resGeo.ok) throw new Error('Problem Getting The Geo Location Data');
+
+    const dataGeo = await resGeo.json();
+    console.log(dataGeo);
+
+    // countryData
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataGeo.countryName}`
+    );
+    if (!res.ok) throw new Error('Problem Getting Country Data');
+    const data = await res.json();
+    console.log(data[0]);
+    renderCountry(data[0]);
+
+    return `You are in ${dataGeo.city}, ${dataGeo.countryName}`;
+  } catch (err) {
+    console.error(err);
+    renderError(`Something went wrong! ${err.message} 💥`);
+
+    // Reject promise return from async function
+    throw err;
+  } finally {
+    btn.style.opacity = 0;
+    countriesContainer.style.opacity = 1;
+  }
 };
 
-const createImage = function (imgPath) {
-  return new Promise(function (resolve, reject) {
-    const imgEl = document.createElement('img');
-    imgEl.src = imgPath;
-    imgEl.addEventListener('error', e => reject(e));
-    //TODO
-    imgEl.addEventListener('load', function () {
-      document.body.appendChild(imgEl);
-      resolve(imgEl);
-    });
-  });
-};
-createImage('img/img-1.jpg')
-  .then(data => {
-    globEl = data;
-    return wait(2);
-  })
-  .then(() => {
-    globEl.style.display = 'none';
-    createImage('img/img-2.jpg').then(data => (globEl = data));
-    return wait(2);
-  })
-  .then(() => {
-    globEl.style.display = 'none';
-    createImage('img/img-3.jpg').then(data => (globEl = data));
-  })
-  .catch(err => console.error(err));
+// Try catch
+
+// try {
+//   let y = 1;
+//   const x = 9;
+//   x = 3;
+// } catch (err) {
+//   console.log(err);
+// }
+
+// Using Return values of async/await
+
+// whereAmI().then(city => console.log(city)); // Using Then OR ->
+
+// Using an iife
+
+(async function () {
+  const city = await whereAmI();
+  console.log(city);
+})();

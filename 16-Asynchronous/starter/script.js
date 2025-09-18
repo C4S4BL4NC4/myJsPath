@@ -694,3 +694,45 @@ TEST DATA: ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']. To test, turn of
 
 GOOD LUCK 😀
 */
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+// PART I
+
+// async function loadNPause(imgPath) {
+//   return await new Promise(function (resolve, reject) {
+//     try {
+//       const imgEl = document.createElement('img');
+//       imgEl.src = imgPath;
+//       //TODO
+//       imgEl.addEventListener('load', function () {
+//         (async function () {
+//           document.body.appendChild(imgEl);
+//           await wait(2);
+//           imgEl.style.display = 'none';
+//           resolve(imgEl);
+//         })();
+//       });
+//     } catch (e) {
+//       reject(e);
+//       throw new Error(`💥💥 ${e} 💥💥`);
+//     }
+//   });
+// }
+
+// (async function () {
+//   await loadNPause('img/img-1.jpg');
+//   await loadNPause('img/img-2.jpg');
+//   await loadNPause('img/img-3.jpg');
+// })();
+
+// PART II
+
+async function loadAll(imgArr) {
+  //
+}
+
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);

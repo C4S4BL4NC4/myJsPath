@@ -731,8 +731,26 @@ const wait = function (seconds) {
 
 // PART II
 
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const imgEl = document.createElement('img');
+    imgEl.src = imgPath;
+    imgEl.addEventListener('error', e => reject(e));
+    //TODO
+    imgEl.addEventListener('load', function () {
+      document.body.appendChild(imgEl);
+      resolve(imgEl);
+    });
+  });
+};
+
 async function loadAll(imgArr) {
   //
+  const imgs = imgArr.map(async img => await createImage(img));
+  console.log(imgs);
+  const imgsAll = await Promise.all(imgs);
+  console.log(imgsAll);
+  imgsAll.forEach(img => img.classList.add('parallel'));
 }
 
 loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);

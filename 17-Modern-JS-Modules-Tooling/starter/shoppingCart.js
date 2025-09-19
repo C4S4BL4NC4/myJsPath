@@ -1,9 +1,9 @@
 //  Exporting Module
 // console.log('EXPORTING MODULE');
 
-// // Named Exports
+// Named Exports
 // const shipping = 10;
-// const cart = [];
+const cart = [];
 // export { cart, shipping };
 
 // export const addToCart = function (product, quantity) {
@@ -17,11 +17,11 @@
 
 // export { totalPrice, totalQuantity as qt };
 
-// // Default Exports
-// // Default Exports -> when you wanna export one thing per module.
+// Default Exports
+// Default Exports -> when you wanna export one thing per module.
 
-// export default function (product, quantity) {
-//   // Named export
-//   cart.push({ product, quantity });
-//   console.log(`${quantity} ${product} added to cart`);
-// }
+export default function (product, quantity) {
+  // Named export
+  cart.push({ product, quantity });
+  console.log(`${quantity} ${product} added to cart`);
+}

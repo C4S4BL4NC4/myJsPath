@@ -36,30 +36,38 @@
 // console.log(lastPost);
 
 // THE MODULE PATTERN
-/*
 
-const ShoppingCart2 = (function () {
-  const cart = [];
-  const shippingCost = 10;
-  const totalPrice = 123;
-  const totalQuantity = 23;
+// const ShoppingCart2 = (function () {
+//   const cart = [];
+//   const shippingCost = 10;
+//   const totalPrice = 123;
+//   const totalQuantity = 23;
 
-  const addToCart = function (product, quantity) {
-    cart.push({ product, quantity });
-    console.log(`${quantity} ${product} added to cart`);
-  };
+//   const addToCart = function (product, quantity) {
+//     cart.push({ product, quantity });
+//     console.log(`${quantity} ${product} added to cart`);
+//   };
 
-  const orderStock = function (product, quantity) {
-    cart.push({ product, quantity });
-    console.log(`${quantity} ${product} ordered from supplier`);
-  };
+//   const orderStock = function (product, quantity) {
+//     cart.push({ product, quantity });
+//     console.log(`${quantity} ${product} ordered from supplier`);
+//   };
 
-  return { addToCart, cart, totalPrice, totalQuantity };
-})();
+//   return { addToCart, cart, totalPrice, totalQuantity };
+// })();
 
-ShoppingCart2.addToCart('apple', 4);
-ShoppingCart2.addToCart('orange', 4);
-console.log(ShoppingCart2);
-*/
+// ShoppingCart2.addToCart('apple', 4);
+// ShoppingCart2.addToCart('orange', 4);
+// console.log(ShoppingCart2);
+import add from './shoppingCart.js';
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash-es'; // Parcel will import
+add('banana', 5);
+add('melon', 1);
+add('grapes', 2);
 
-import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+if (module.hot) {
+  // Parcel hot loading without refreshing page
+
+  module.hot.accept();
+}

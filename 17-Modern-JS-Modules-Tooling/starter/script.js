@@ -59,7 +59,7 @@
 // ShoppingCart2.addToCart('apple', 4);
 // ShoppingCart2.addToCart('orange', 4);
 // console.log(ShoppingCart2);
-import add from './shoppingCart.js';
+import add, { cart } from './shoppingCart.js';
 // import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
 import cloneDeep from 'lodash-es'; // Parcel will import
 add('banana', 5);
@@ -71,3 +71,18 @@ if (module.hot) {
 
   module.hot.accept();
 }
+
+class Person {
+  #greeting = 'Hey';
+  constructor(name) {
+    this.name = name;
+    console.log(`${this.#greeting}, ${this.name}!`);
+  }
+}
+
+const jonas = new Person('Raj');
+
+Promise.resolve('TEST').then(x => console.log(x));
+
+import 'core-js/stable'; // Pollyfilling new features back to ES5 (for older browser support)
+import 'regenerator-runtime/runtime'; // Pollyfilling async functions

@@ -772,6 +772,15 @@ var _lodashEsDefault = parcelHelpers.interopDefault(_lodashEs);
 (0, _shoppingCartJsDefault.default)('grapes', 2);
 if (module.hot) // Parcel hot loading without refreshing page
 module.hot.accept();
+class Person {
+    #greeting = 'Hey';
+    constructor(name){
+        this.name = name;
+        console.log(`${this.#greeting}, ${this.name}!`);
+    }
+}
+const jonas = new Person('Raj');
+Promise.resolve('TEST').then((x)=>console.log(x));
 
 },{"./shoppingCart.js":"3ZJbS","lodash-es":"33LEu","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"3ZJbS":[function(require,module,exports,__globalThis) {
 //  Exporting Module

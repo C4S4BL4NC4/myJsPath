@@ -2,18 +2,15 @@
 recipe, search, and bookmark
 */
 import { async } from 'regenerator-runtime';
+import { API_URL } from './config';
+import { getJSON } from './helpers';
 export const state = {
   recipe: {},
 };
 
 export const loadRecipe = async function (id) {
   try {
-    const res = await fetch(
-      `https://forkify-api.jonas.io/api/v2/recipes/${id}`
-    );
-    //      2) Send request and capture response
-    const data = await res.json();
-    if (!res.ok) throw new Error(`💥${data.message} (${res.status})`);
+    const data = await getJSON(`${API_URL}/${id}`);
     // console.log(res, data);
 
     const { recipe } = data.data;
@@ -29,6 +26,6 @@ export const loadRecipe = async function (id) {
     };
     console.log(state.recipe);
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };

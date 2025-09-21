@@ -8,6 +8,9 @@ TODO:
 class RecipeView {
   #parentElement = document.querySelector('.recipe');
   #data;
+  #errorMessage = "We can't find that recipe. Please try another one!~";
+  #message = '';
+
   render(data) {
     this.#data = data;
     const markup = this.#generateMarkup();
@@ -29,6 +32,11 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  addHendlerRender(handlerFunc) {
+    ['hashchange', 'load'].forEach(e =>
+      window.addEventListener(e, handlerFunc)
+    );
+  }
   #generateMarkup() {
     return `
         <figure class="recipe__fig">
@@ -125,6 +133,32 @@ class RecipeView {
                         ${ing.description}
                       </div>
             </li>`;
+  }
+
+  renderError(errMsg = this.#errorMessage) {
+    const markup = `<div class="error">
+            <div>
+              <svg>
+                <use href="${icons}#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${errMsg}</p>
+          </div>`;
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderMessage(msg = this.#message) {
+    const markup = `<div class="message">
+            <div>
+              <svg>
+                <use href="${icons}#icon-smile"></use>
+              </svg>
+            </div>
+            <p>${msg}</p>
+          </div>`;
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 }
 

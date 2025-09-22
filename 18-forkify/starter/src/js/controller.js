@@ -15,7 +15,12 @@ import View from './views/view.js';
 ///////////////////////////////////////
 
 // TOGGLE TESTING FROM CONFIG FILE:
+/*
 
+DROPPED ON LECTURE .309 DUE TO ISSUES WITH THE API.
+can continue with the testing class to simulate the api, but it would be a lot of useless hassle since the whole purpose of the project to use online APIs 
+
+*/
 ///////////////////////////////////////
 
 const controlRecipes = async function () {
